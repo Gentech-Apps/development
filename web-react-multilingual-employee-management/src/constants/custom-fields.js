@@ -1,0 +1,6 @@
+// id for customFields METALPRESS
+
+export const CUSTOM_FIELDS_PHONE = '5f6e198e4660167b4ccb5d58';
+export const CUSTOM_FIELDS_CONTACT_NAME = '5f6e198e4660167b4ccb5d57';
+export const CUSTOM_FIELDS_REMARKS = '5e67f1cb10de2dfe9ace1580';
+export const CUSTOM_FIELDS_DESCRIPTION = '5f6e198e4660167b4ccb5d56';

@@ -1,0 +1,282 @@
+@import '../abstracts/variables';
+@import '../abstracts/mixins';
+
+.special__custom__input.special__custom__input {
+  margin-top: 0;
+  width: 100%;
+}
+
+.special__custom__input.special__custom__input input {
+  width: 100%;
+}
+
+.popup__form__cancel-icon {
+  color: white;
+  z-index: 100;
+  cursor: pointer;
+  // padding: 10px;
+  width: 50px !important;
+  height: 50px !important;
+  position: absolute;
+  left: 480px;
+  top: 10px;
+}
+
+.input__container {
+  width: 100%;
+}
+
+.input__container__textarea {
+  resize: none;
+  width: 100%;
+  border-radius: 5px;
+  border: solid 1px #e2e2e2;
+  background-color: #f9f9f9;
+  font-family: Rubik;
+  font-size: 16px;
+  height: 100px;
+  padding: 5px;
+
+  &:focus {
+    outline: none;
+  }
+}
+// @keyframes slide-from-top {
+//   from {
+//     top: 0;
+//   }
+//   to {
+//     top: 50px;
+//   }
+// }
+
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  transition: all 0.2s;
+  overflow-x: hidden;
+}
+
+.popup__inner {
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: absolute;
+  width: 474px;
+  height: calc(100% - 46px);
+  left: 0%;
+  padding: 0 25px;
+  //   transform: translate(-50%);
+  top: 0px;
+  bottom: 25%;
+  background: white;
+  //   border-radius: 5px;
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+  // animation-name: slide-from-top;
+  // animation-duration: 1s;
+  overflow-y: scroll;
+  font-size: 14px;
+
+  .popup__middle__line {
+    width: 100%;
+    height: 1px;
+    // border-radius: 5px;
+    background-color: #b6b6b6;
+    border-top: 1px solid black;
+    // margin-top: 61px;
+    display: none;
+  }
+
+  .popup__right {
+    .popup__title {
+      font-family: 'Rubik', sans-serif;
+      font-size: 30px;
+      font-weight: 100;
+      color: #000000;
+      margin: 25px 0;
+    }
+    .form__container {
+      display: flex;
+      width: 423px;
+      justify-content: space-between;
+      //   margin-right: 15px;
+      margin-top: 5px;
+      margin-top: 20px;
+      //   height: 360px;
+
+      div {
+        font-family: Rubik;
+        font-size: 16px;
+        line-height: normal;
+        // margin-bottom: 8px;
+      }
+      input {
+        width: 200px;
+        height: 40px;
+        border-radius: 5px;
+        border: solid 1px #e2e2e2;
+        background-color: #f9f9f9;
+        font-family: Rubik;
+        font-size: 16px;
+        text-indent: 5px;
+        // margin-bottom: 15px;
+      }
+      input:focus {
+        outline: none;
+        background-color: #f9f9f9;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+      .input__container {
+        height: 82px;
+
+        input {
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .popup__left {
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    padding-top: 30px;
+    input {
+      cursor: pointer;
+      font-size: 14px !important;
+    }
+
+    .popup__left__titles {
+      display: flex;
+
+      .step__title {
+        margin-right: 32px;
+        margin-left: 179px;
+      }
+      .amount__title {
+        margin-right: 61px;
+      }
+
+      div {
+        opacity: 0.5;
+        font-family: Rubik;
+        font-size: 14px;
+        line-height: normal;
+      }
+    }
+
+    .input__buttons {
+      margin-top: 30px;
+      position: fixed;
+      -webkit-box-shadow: 0px -10px 23px -18px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0px -10px 23px -18px rgba(0, 0, 0, 0.3);
+      box-shadow: 0px -10px 23px -18px rgba(0, 0, 0, 0.3);
+      bottom: 0;
+      left: 0px;
+      width: 474px;
+      background-color: white;
+      z-index: 100;
+      padding: 5px 0;
+      @include displayFlex(row, center, center);
+      transition: all 0.2s;
+
+      .cancel__popup {
+        width: 150px;
+        margin-left: 10px;
+        height: 36px;
+        border-radius: 100px;
+        background-color: rgba(0, 145, 255, 0.1);
+
+        font-family: Rubik;
+        font-size: 14px;
+        text-align: center;
+        color: #0091ff;
+        border: none;
+        cursor: pointer;
+        outline: inherit;
+        // position: absolute;
+        // bottom: 19px;
+        // left: 130px;
+      }
+
+      .cancel__popup:hover {
+        background-color: rgba(0, 145, 255, 0.205);
+      }
+
+      .submit__button:hover {
+        background-color: $hover-buttom-blue;
+      }
+
+      .submit__button {
+        width: 260px;
+        height: 36px;
+        border-radius: 100px;
+        background-color: #0091ff;
+
+        color: white;
+        color: white;
+        border: none;
+        cursor: pointer;
+        outline: inherit;
+        font-family: Rubik;
+        font-size: 14px;
+        // position: absolute;
+        // bottom: 19px;
+        // left: 20px;
+      }
+    }
+  }
+}
+
+.validate__message {
+  color: red;
+  font-size: 12px !important;
+}
+
+#percent_validate {
+  margin-right: 18px;
+}
+
+.transaction__input {
+  cursor: pointer;
+}
+
+.exit__icon__main__popup {
+  position: absolute;
+  top: 9px;
+  right: 8px;
+}
+
+.form__container .react-datepicker {
+  left: 22px;
+}
+
+.form__container .react-datepicker__day {
+  height: 27px;
+  width: 27px;
+  padding-top: 5px;
+}
+
+.form__container .react-datepicker__navigation--previous {
+  padding: 7px;
+}
+
+.form__container .react-datepicker__navigation--next {
+  padding: 7px;
+}
+
+.form__container .react-datepicker__current-month::after {
+  display: none;
+}
+
+.form__container .react-datepicker__year-dropdown {
+  min-height: unset;
+  height: fit-content;
+}

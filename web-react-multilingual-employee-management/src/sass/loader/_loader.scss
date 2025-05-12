@@ -1,0 +1,256 @@
+@import '../abstracts/variables.scss';
+@import '../abstracts/mixins.scss';
+
+.loader-new .lds-ellipsis {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.lds-ellipsis {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ellipsis div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: $underlined-blue;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.lds-ellipsis div:nth-child(1) {
+  left: 16px;
+  animation: lds-ellipsis1 0.6s infinite;
+  @include mediaMaxWidth(800px) {
+    animation: lds-ellipsis1-mobile 0.6s infinite;
+    left: 8px;
+  }
+}
+.lds-ellipsis div:nth-child(2) {
+  left: 16px;
+  animation: lds-ellipsis2 0.6s infinite;
+  @include mediaMaxWidth(800px) {
+    animation: lds-ellipsis2-mobile 0.6s infinite;
+    left: 8px;
+  }
+}
+.lds-ellipsis div:nth-child(3) {
+  left: 64px;
+  animation: lds-ellipsis2 0.6s infinite;
+  @include mediaMaxWidth(800px) {
+    animation: lds-ellipsis2-mobile 0.6s infinite;
+    left: 32px;
+  }
+}
+.lds-ellipsis div:nth-child(4) {
+  left: 112px;
+  animation: lds-ellipsis3 0.6s infinite;
+  @include mediaMaxWidth(800px) {
+    animation: lds-ellipsis3-mobile 0.6s infinite;
+    left: 54px;
+  }
+}
+
+@keyframes lds-ellipsis1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(2);
+  }
+}
+@keyframes lds-ellipsis3 {
+  0% {
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2 {
+  0% {
+    transform: translate(0, 0) scale(2);
+  }
+  100% {
+    transform: translate(48px, 0) scale(2);
+  }
+}
+
+@keyframes lds-ellipsis1-mobile {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes lds-ellipsis3-mobile {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes lds-ellipsis2-mobile {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(24px, 0) scale(1);
+  }
+}
+
+//for updatePopup
+
+.custom__popup__update__submit-section {
+  .loader-new {
+    transform: scale(0.4);
+    background-color: unset;
+    position: relative;
+    right: 11px;
+  }
+}
+
+.login__box__container {
+  .loader-new {
+    transform: scale(0.4);
+    background-color: unset;
+    position: relative;
+    right: 11px;
+    top: 1px;
+  }
+
+  .lds-ellipsis div {
+    background: #ffffff;
+  }
+}
+
+.semi_annual_save_btn {
+  height: 24px;
+  .loader-new {
+    transform: scale(0.4);
+    background-color: unset;
+    position: relative;
+    right: 11px;
+    top: 1px;
+  }
+
+  .lds-ellipsis div {
+    background: #ffffff;
+  }
+}
+
+//bids loader
+
+.bids-loader {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.bids-loader div {
+  position: absolute;
+  top: 33px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: $underlined-blue;
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+.bids-loader div:nth-child(1) {
+  left: 8px;
+  animation: bids-loader1 0.6s infinite;
+}
+.bids-loader div:nth-child(2) {
+  left: 8px;
+  animation: bids-loader2 0.6s infinite;
+}
+.bids-loader div:nth-child(3) {
+  left: 32px;
+  animation: bids-loader2 0.6s infinite;
+}
+.bids-loader div:nth-child(4) {
+  left: 56px;
+  animation: bids-loader3 0.6s infinite;
+}
+@keyframes bids-loader1 {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes bids-loader3 {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes bids-loader2 {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(24px, 0);
+  }
+}
+
+// loader stripes
+
+.loader-stripes {
+  @include displayFlex(column);
+  height: 100%;
+  width: 100%;
+  padding: 0 5px;
+
+  & > span {
+    background-color: rgba(36, 55, 72, 0.1);
+    width: 100%;
+    height: 34px;
+    margin-bottom: 2px;
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    animation: stripe-move infinite 1.5s;
+  }
+}
+
+.back-to-systems-text-mobile {
+  position: absolute;
+  color: rgb(0, 145, 255);
+  width: 100%;
+  text-align: left;
+  top: 50px;
+  right: -15px;
+  font-size: 16px;
+}
+
+.back-to-systems-text-desktop {
+  position: absolute;
+  color: rgb(0, 145, 255);
+  right: 53%;
+  bottom: 4%;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+@keyframes stripe-move {
+  0% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}

@@ -1,0 +1,791 @@
+@import '../abstracts/mixins';
+@import '../abstracts/variables';
+
+@function vh($quantity) {
+  @return calc(var(--vh, 1vh) * #{$quantity});
+}
+
+.custom__popup .drop__down__box__container {
+  width: 100%;
+  margin-top: 8px;
+}
+
+.custom__popup .drop__down__box__container .drop__down__box {
+  position: relative;
+  width: 100%;
+}
+
+.custom__popup .drop__down__box__container .drop__down__box__icon {
+  @include displayFlex(row, space-between, center);
+  width: 100%;
+  float: unset;
+  padding: 0 8px;
+  height: 100%;
+}
+
+.custom__popup .drop__down__list {
+  position: absolute;
+  width: 100%;
+}
+
+.custom__popup .drop__down__list .drop__down__option {
+  width: 100%;
+}
+
+.custom__popup .fa-sort-down {
+  transform: translateY(-2px);
+}
+.custom__popup .drop__down__header__select {
+  width: 100%;
+  padding: 0;
+}
+
+//drop
+.update-popup-drop {
+  width: 164px;
+  height: 45px;
+  border-radius: 5px;
+  border: solid 1px $drop-gray-border;
+  background-color: $drop-bg;
+  margin-top: 8px;
+  padding: 0 13px;
+  position: relative;
+  cursor: pointer;
+  @include mediaMaxWidth(800px) {
+    width: 100%;
+  }
+
+  & > span {
+    width: 100%;
+    height: 100%;
+    @include displayFlex(row, space-between, center);
+  }
+
+  & > ul {
+    @include appDropdown;
+
+    & > li {
+      width: 100%;
+      height: 30px;
+      border-radius: 5px;
+      @include displayFlex(row, flex-start, center);
+      padding-right: 12px;
+
+      &:hover {
+        background-color: #f1f1f1;
+      }
+    }
+  }
+
+  &--active > ul {
+    transform: scaleY(1);
+    transition: transform 0.2s;
+    transform-origin: top;
+  }
+}
+//
+
+.custom__popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  @include displayFlex(column, flex-start, center);
+  @include mediaMaxWidth(800px) {
+    height: 100%;
+    min-height: 100vh;
+    height: -moz-available; /* WebKit-based browsers will ignore this. */
+    height: -webkit-fill-available; /* Mozilla-based browsers will ignore this. */
+    height: fill-available;
+    // height:vh(100);
+    position: absolute;
+    top: -96px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &__locked-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 100%;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background-color: rgba(255, 255, 255, 0.2);
+    @include displayFlex(column, center, center);
+
+    & > .custom__popup__update__submit-section {
+      width: 454px;
+      height: 150px;
+      border-radius: 5px;
+      box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+      background-color: #ffffff;
+      padding: 25px;
+      text-align: center;
+      transform: translateY(-10px);
+      @include displayFlex(column, space-between, center);
+      @include mediaMaxWidth(800px) {
+        width: 90%;
+      }
+    }
+  }
+
+  &__warnings {
+    & > h1 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 5px;
+      margin-top: 15px;
+    }
+
+    & > h2 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    &__list {
+      width: 300px;
+      height: 190px;
+      border-radius: 5px;
+      background-color: $dark-gray-bg;
+      padding: 0 10px;
+      margin-bottom: 15px;
+      overflow-y: scroll;
+      -webkit-overflow-scrolling: touch;
+      &__warning {
+        height: 30px;
+        border-bottom: 1px solid #d1d1d1;
+        font-size: 15px;
+        @include displayFlex(row, flex-start, center);
+      }
+    }
+
+    &__submit-section {
+      @include displayFlex(row, center, center);
+
+      & > button,
+      & > span > button {
+        @include generalButtonStyle();
+      }
+
+      & > button:nth-of-type(1),
+      & > span > button:nth-of-type(1) {
+        @include btnCancel();
+      }
+
+      & > button:nth-of-type(2),
+      & > span > button:nth-of-type(2) {
+        @include btnchange();
+      }
+    }
+  }
+
+  &__curtain {
+    background: $popup-bg;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__content {
+    width: 360px;
+    margin-top: 50px;
+    padding: 30px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+    z-index: 300;
+    background-color: white;
+    @include displayFlex(column, center, center);
+
+    @include mediaMaxWidth(800px) {
+      width: 96%;
+    }
+
+    &__submit {
+      @include displayFlex(row, center, center);
+      margin-top: 50px;
+
+      & > button {
+        @include generalButtonStyle();
+      }
+
+      & > button:nth-of-type(1) {
+        @include btnCancel;
+      }
+
+      & > button:nth-of-type(2) {
+        @include btnchange;
+      }
+
+      &--disabled {
+        background-color: #f9f9f9 !important;
+        pointer-events: none;
+        cursor: unset;
+        color: #b7bdc2 !important;
+      }
+    }
+
+    &__form-group {
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    &__form-group > label {
+      font-size: 16px;
+      color: #000000;
+      margin-bottom: 8px;
+    }
+
+    .task--add--icon {
+      width: 16px;
+      height: 16px;
+    }
+  }
+}
+
+.custom__popup__mobile {
+  z-index: 100;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  @include displayFlex(column, flex-start, space-evenly);
+  &__submit-section {
+    // @include displayFlex(row,flex-end,space-evenly);
+    width: 100%;
+    margin: 10px 0;
+    @include mediaMaxWidth(800px) {
+      @include displayFlex(row, space-evenly, center);
+      // margin-top: 50px;
+    }
+    & > button {
+      padding: 5px 15px;
+      background-color: #0091ff;
+      border-radius: 15px;
+      border: 0;
+      color: white;
+    }
+  }
+}
+
+//updatepopup
+.custom__popup__update__form-group--column:nth-of-type(1) .react-datepicker {
+  right: 14px;
+}
+.custom__popup__update__form-group--column:nth-of-type(2) .react-datepicker {
+  left: -14px;
+}
+
+.custom__popup__update {
+  width: 750px;
+  margin-top: 50px;
+  padding: 30px 20px;
+  padding-bottom: 60px;
+  height: auto;
+  border-radius: 5px;
+
+  box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.15);
+  z-index: 300;
+  background-color: white;
+  @include displayFlex(row, space-between, flex-start);
+
+  @include mediaMaxWidth(800px) {
+    min-height: 540px;
+    // max-width:100vw; /* + */
+    width: 96%;
+    @include displayFlex(column, space-between, flex-start);
+    margin-top: 20px; /* + */
+    padding-bottom: 20px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  position: relative;
+
+  &--first-section {
+    width: 50%;
+    height: 100%;
+
+    @include mediaMaxWidth(800px) {
+      width: 100%;
+      height: calc(100% - 65px);
+      @include displayFlex(column, start, flex-start);
+    }
+  }
+
+  &--second-section {
+    width: 50%;
+    height: 100%;
+
+    @include mediaMaxWidth(800px) {
+      width: 100%;
+      height: auto;
+      // height: 425px;
+      // max-height: 300px;
+      @include displayFlex(column, start, flex-start);
+    }
+  }
+
+  & > ul > li {
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 10px;
+  }
+
+  //left side
+
+  &--second-section {
+    border-right: 0px solid #b6b6b6;
+    padding-right: 20px;
+    margin-right: 20px;
+
+    &::after {
+      content: '';
+      height: calc(100% - 40px);
+      width: 1px;
+      position: absolute;
+      right: 51.3%;
+      top: 19px;
+      border-right: 1px solid #b6b6b6;
+      @include mediaMaxWidth(800px) {
+        display: none;
+      }
+    }
+
+    @include mediaMaxWidth(800px) {
+      padding-right: 0;
+      margin-right: 0;
+      border: 0;
+    }
+
+    & > p {
+      margin-bottom: 10px;
+    }
+
+    & > textarea {
+      width: 100%;
+      height: calc(100% - 51px);
+      min-height: 60px;
+      border-radius: 5px;
+      border: solid 1px #e2e2e2;
+      background-color: #f9f9f9;
+      resize: none;
+      font: inherit;
+      padding: 14px 17px;
+      font-size: 16px;
+      @include mediaMaxHeight(665px) {
+        transform: translateY(-10px);
+      }
+      @include mediaMaxWidth(800px) {
+        height: calc(100% - 150px);
+      }
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    & > div {
+      width: 100%;
+      height: 350px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      @include mediaMaxWidth(800px) {
+        display: none;
+      }
+      @include mediaMaxWidth(475px) {
+        height: 65px;
+      }
+    }
+  }
+
+  //
+  &__header {
+    font-size: 25px;
+    color: #000000;
+    margin-bottom: 10px;
+    @include displayFlex(row, space-between, center);
+
+    @include mediaMaxWidth(800px) {
+      width: 100%;
+    }
+  }
+
+  &__client-data {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    // color: $faded-black;
+    cursor: pointer;
+    color: $underlined-blue;
+    text-decoration: underline;
+    @include mediaMaxWidth(800px) {
+      // display:none;
+      // position: relative;
+      // top:8px;
+      // left:20px;
+      // right:unset;
+      // bottom:unset;
+      bottom: 75px;
+    }
+  }
+
+  &__client-data-for-systems {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    font-size: 14px;
+    // color: $faded-black;
+    cursor: pointer;
+    color: $underlined-blue;
+    text-decoration: underline;
+    @include mediaMaxWidth(800px) {
+      display: none;
+      // position: relative;
+      // top:8px;
+      // left:20px;
+      // right:unset;
+      // bottom:unset;
+      // bottom:0px;
+      // bottom:75px; ----------------------------------------------------------------------------
+    }
+  }
+
+  &__drop {
+    position: relative;
+    cursor: pointer;
+    z-index: 100;
+    margin-bottom: 16px;
+
+    & > span {
+      @include displayFlex(row, flex-start, center);
+
+      & > p {
+        color: $faded-black;
+        font-size: 16px;
+        margin-left: 5px;
+      }
+    }
+
+    & > ul {
+      @include appDropdown;
+    }
+
+    & > ul > li {
+      width: 100%;
+      height: 30px;
+      border-radius: 5px;
+      @include displayFlex(row, flex-start, center);
+      padding-right: 12px;
+    }
+
+    & > ul > li:hover {
+      background-color: #f1f1f1;
+    }
+  }
+
+  &__drop--active {
+    & > ul {
+      transform: scaleY(1);
+      transition: transform 0.2s;
+      transform-origin: top;
+    }
+  }
+
+  &__form-group {
+    width: 100%;
+    @include displayFlex(row, space-between, center);
+    margin-bottom: 25px;
+  }
+
+  &__form-group--column {
+    position: relative;
+    width: 46%;
+    @include displayFlex(column, center, flex-start);
+
+    &--date {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      z-index: 1;
+      height: 100%;
+      width: 100%;
+      margin-bottom: 13px;
+      padding: 0 13px;
+      @include displayFlex(row, space-between, flex-end);
+    }
+  }
+
+  & .react-datepicker {
+    z-index: 99;
+    top: 100%;
+    top: 32px;
+    left: -50px;
+    @include mediaMaxWidth(800px) {
+      left: unset;
+      position: absolute;
+    }
+  }
+
+  & .react-datepicker-wrapper {
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    border: solid 1px #e2e2e2;
+    background-color: #f9f9f9;
+    margin-top: 8px;
+    position: relative;
+  }
+
+  & .react-datepicker__input-container,
+  & .react-datepicker__input-container input {
+    width: 100%;
+    height: 100%;
+    max-width: unset;
+  }
+
+  &__data-section {
+    margin-bottom: 30px;
+    @include mediaMaxWidth(800px) {
+      width: 100%;
+    }
+
+    &__input-controllers {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      opacity: 0.6;
+      border: 1px solid #000000;
+      touch-action: manipulation;
+      margin: 0 5px;
+      cursor: pointer;
+      display: none;
+      @include mediaMaxWidth(800px) {
+        @include displayFlex(row, center, center);
+      }
+    }
+  }
+
+  &__data-section-row {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    @include mediaMaxWidth(800px) {
+      width: 100%;
+    }
+
+    &__input-controllers {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      opacity: 0.6;
+      border: 1px solid #000000;
+      touch-action: manipulation;
+      margin: 0 5px;
+      cursor: pointer;
+      display: none;
+      @include mediaMaxWidth(800px) {
+        @include displayFlex(row, center, center);
+      }
+    }
+  }
+
+  &__data-section > h2 {
+    @include displayFlex(row, flex-start, flex-start);
+    font-size: 18px;
+    font-weight: 500;
+    color: #000000;
+  }
+
+  &__data-section__first-row {
+    @include displayFlex(row, flex-start, center);
+
+    & > p {
+      margin-left: 5px;
+      font-size: 15px;
+      color: #000000;
+    }
+  }
+
+  &__data-section__second-row {
+    @include displayFlex(row, flex-start, center);
+    @include mediaMaxWidth(800px) {
+      @include displayFlex(row, space-between, center);
+      // width: 100%;
+      flex-wrap: wrap;
+    }
+
+    &--filler {
+      display: none;
+      @include mediaMaxWidth(800px) {
+        display: block;
+        flex-grow: 1;
+      }
+    }
+
+    margin-top: 5px;
+
+    & > a {
+      font-size: 14px;
+      color: $underlined-blue;
+      text-decoration: underline;
+      margin-right: 10px;
+      cursor: pointer;
+
+      @include mediaMaxWidth(800px) {
+        @include displayFlex(row, center, center);
+        width: 104px;
+        height: 36px;
+        border-radius: 18px;
+        background-color: #f4f4f4;
+        text-decoration: unset;
+      }
+    }
+
+    & > p {
+      margin-left: 8px;
+      font-size: 15px;
+      color: $neon-green;
+      @include mediaMaxWidth(800px) {
+        width: 100%;
+        margin: 10px 0;
+      }
+    }
+
+    & > input {
+      width: 45px;
+      height: 30px;
+      border-radius: 5px;
+      border: solid 1px #e2e2e2;
+      padding-right: 5px;
+      font-size: 15px;
+      color: $neon-green;
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type='number'] {
+        -moz-appearance: textfield;
+      }
+    }
+  }
+
+  &__submit-section {
+    @include displayFlex(row, flex-end, center);
+    width: 100%;
+    margin-top: 25px;
+    @include mediaMaxWidth(800px) {
+      @include displayFlex(row, center, center);
+      margin-top: 50px;
+    }
+
+    & > .link_button {
+      // @include generalButtonStyle();
+      display: none;
+      @include mediaMaxWidth(800px) {
+        max-width: 130px;
+        overflow-x: hidden;
+        display: block;
+        font-size: 17px;
+        cursor: pointer;
+        color: $underlined-blue;
+        // text-decoration: underline;
+      }
+    }
+
+    & > div:nth-of-type(1) {
+    }
+
+    & > div:nth-of-type(2) {
+      & > button {
+        @include generalButtonStyle();
+      }
+
+      & > button:nth-of-type(1) {
+        @include btnCancel();
+      }
+
+      & > button:nth-of-type(2) {
+        @include btnchange();
+      }
+    }
+  }
+}
+
+.system__names__holder {
+  width: 100%;
+  max-height: 270px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+  color: red;
+  @include mediaMaxWidth(800px) {
+    max-height: 75%;
+    height: calc(100% - 155px);
+    margin-bottom: 0px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  & > li:hover {
+    background-color: #f1f1f1;
+  }
+}
+
+.exit__icon__reason__popup {
+  position: relative;
+  left: 16px;
+  margin-left: auto;
+  bottom: 16px;
+}
+
+.reset__button {
+  width: 208px !important;
+  background-color: unset !important;
+  margin-top: 12px;
+  text-decoration: underline;
+}
+
+.system_note {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  & > p {
+    // max-width: 290px;
+    // width:280px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
+
+.create_task_link {
+  color: #0091ff;
+  cursor: pointer;
+}
+
+.completionsCheckboxAndAddTaskWrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.completionsCheckBoxWrapper {
+  display: flex;
+  align-items: center;
+}

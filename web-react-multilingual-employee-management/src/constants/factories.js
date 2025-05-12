@@ -1,0 +1,9 @@
+export const METALPRESS = '5e6529c1bfcb72b8af9c438c';
+export const TOP_GROUP = '5dde79d000e19f57b141aba2';
+export const ALUM_ZOHAR = '5e37c699c30e2cecda2b121f';
+export const COCHAV = '5df20320fa38ef80aef65bf2';
+export const METALPRESS_DOORS = '5f6de20dafeeac89e8de3d88';
+export const DEMO = '5e254b816ba428490b1544a4';
+export const METALPRESS_WINDOWS = '61c56a65a0e9ac90b943bcdc';
+export const SERVICE = 'service';
+export const PRODUCTION = 'production';

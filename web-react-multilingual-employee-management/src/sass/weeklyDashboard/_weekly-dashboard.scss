@@ -1,0 +1,316 @@
+@import '../abstracts/mixins.scss';
+@import '../abstracts/variables.scss';
+
+.week-view-page {
+  @include displayFlex(row);
+  font-family: 'Rubik';
+
+  &__completions {
+    width: 11.2vw;
+    min-height: calc(100vh - 100px);
+    flex-shrink: 0;
+    @include displayFlex(column, center, unset);
+    border-right: 1px solid black;
+  }
+
+  &__calendar {
+    flex-grow: 1;
+    height: calc(100vh - 200px);
+
+    &__header {
+      width: 100%;
+      height: 30px;
+      z-index: 1;
+      position: relative;
+      background-color: #243748;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      & > button {
+        @include backToTodayBtn();
+      }
+
+      & > div {
+        position: absolute;
+        left: 5px;
+        top: 0%;
+        @include displayFlex(row);
+        transform: translateY(6px);
+      }
+
+      & > div > figure {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.1);
+        margin-left: 6px;
+        cursor: pointer;
+        @include displayFlex(row, center, center);
+      }
+    }
+
+    &__header > h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+
+    &__dates {
+      width: 100%;
+      height: 70px;
+      background-color: #ffffff;
+      border-bottom: 1px solid $faded-bluish-border;
+      @include displayFlex(row);
+    }
+
+    &__dates--sections {
+      @include displayFlex(column);
+      width: calc(100vw / 8);
+      border-left: 1px solid $faded-bluish-border;
+      height: 100%;
+
+      //new:
+      // width: 16vw!important;
+      // min-width: 100px;
+    }
+
+    &__dates--sections > span {
+      height: 50%;
+      @include displayFlex(row, flex-start, center);
+      padding-right: 10px;
+    }
+
+    &__dates--sections > span:nth-of-type(1) {
+      border-bottom: 1px solid $faded-bluish-border;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    &__dates--sections > span:nth-of-type(2) {
+      font-size: 14px;
+      font-weight: bold;
+      color: $neon-green;
+    }
+
+    &__dates--content {
+      width: 100%;
+      height: 100%;
+      @include displayFlex(row);
+
+      &__day {
+        width: calc(100% / 7);
+        height: 100%;
+        @include displayFlex(column);
+        padding: 0 4px;
+        position: relative;
+      }
+
+      &__day > section:nth-of-type(1) {
+        height: 50%;
+        @include displayFlex(row, center, center);
+        font-size: 15px;
+        color: #000000;
+      }
+
+      &__day > section:nth-of-type(2) {
+        height: 50%;
+        @include displayFlex(column, flex-end, center);
+        font-size: 12px;
+      }
+
+      &__day > section:nth-of-type(2) > span {
+        height: 16px;
+        border-radius: 2px;
+        background-color: $light-neon-green;
+        width: 100%;
+        @include displayFlex(column, center, center);
+        margin-bottom: 2px;
+      }
+
+      &__day > section:nth-of-type(2) > span > p {
+        font-size: 12px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 90%;
+      }
+    }
+
+    // data
+
+    &__data {
+      min-height: calc(100vh - 200px);
+      height: 100%;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      background-color: $gray-background;
+
+      &__row {
+        min-height: 80px;
+        height: auto;
+        @include displayFlex(row);
+      }
+
+      &__row--name {
+        width: calc(100% / 8);
+        flex-grow: 1;
+        flex-shrink: 0;
+        min-height: 80px;
+        border-bottom: 1px solid $faded-bluish-border;
+        border-left: 1px solid $faded-bluish-border;
+        @include displayFlex(row, space-between, flex-start);
+        background-color: #ffffff;
+
+        //new:
+        // width: 16vw!important;
+        // min-width: 100px;
+
+        & > span {
+          padding: 0 15px;
+          padding-top: 15px;
+          font-size: 14px;
+          width: 100%;
+          @include displayFlex(row, space-between, center);
+        }
+      }
+
+      &__row--processes {
+        width: 70.45vw;
+        // max-width: 71.45vw;
+        border-bottom: 1px solid $extra-faded-black;
+        @include displayFlex(row);
+      }
+
+      &__row--processes__droppable {
+        height: 100%;
+        width: calc(100% / 7);
+        @include displayFlex(column, unset, center);
+        flex-shrink: 0;
+      }
+
+      &__row--processes__draggable {
+        width: calc(100% - 8px);
+        height: 74px;
+        border-radius: 3px;
+        border: solid 1px #cfcfcf;
+        background-color: #ffffff;
+        margin: 5px 0;
+        overflow: hidden;
+        position: relative;
+        @include displayFlex(row, unset, center);
+        cursor: pointer;
+
+        &:hover {
+          box-shadow: 0 7px 17px 0 rgba(0, 0, 0, 0.3);
+        }
+      }
+
+      &__row--processes__draggable__progress-bar {
+        width: 100%;
+        height: 5px;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        & > span {
+          height: 100%;
+          display: block;
+        }
+      }
+
+      &__row--processes__draggable--section1 {
+        & > div {
+          width: 16px;
+          height: 16px;
+          @include displayFlex(row, center, center);
+        }
+
+        & > div:hover {
+          background-color: rgba(36, 55, 72, 0.1);
+
+          & > img {
+            opacity: 1;
+          }
+        }
+
+        & > div > img {
+          opacity: 0.3;
+        }
+      }
+
+      &__row--processes__draggable--section2 {
+        margin-right: 13px;
+        margin-top: 5px;
+        height: 100%;
+        @include displayFlex(column, center, unset);
+        max-width: 65%;
+
+        & > p {
+          margin-bottom: 5px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
+        & > p:nth-of-type(1) {
+          font-size: 13px;
+          text-decoration: underline;
+        }
+
+        & > p:nth-of-type(2) {
+          font-size: 16px;
+          font-weight: 500;
+        }
+
+        & > p:nth-of-type(3) {
+          font-size: 14px;
+        }
+      }
+
+      &__row--processes__draggable--section3 {
+        padding-bottom: 5px;
+        padding-top: 8px;
+        height: 100%;
+        @include displayFlex(column, space-between, flex-end);
+        flex-grow: 1;
+        margin-left: 5px;
+
+        & > aside {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          border: solid 1px #ffffff;
+          background-color: $warning;
+        }
+
+        & > span {
+          font-size: 12px;
+        }
+
+        & > div {
+          transform: translate(2px, 3px) scale(1.3);
+          @include displayFlex(column, center, center);
+        }
+
+        & > div > img {
+        }
+      }
+    }
+
+    // data end
+  }
+}
+
+.number_and_remark_wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  & > .remark_text {
+    margin-right: 5px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Canteen management app</title>
+    <style>
+        body {
+            display: flex;
+            font-size: 16px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+        section .info-box {
+            margin-left: 30%;
+        }
+        .info-box {
+            border: 2px solid yellow;
+            font-weight: bolder;
+            width: 40%;
+            background-color: whitesmoke;
+            text-align: left;
+            padding: 15px;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        .info-box p {
+            margin: 10px 0;
+        }
+        .info-box strong {
+            color: #4CAF50;
+        }
+        .closing p {
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <div style="align: center">
+                <img src="https://genesistechnologies.in/wp-content/uploads/2019/03/cropped-G_Logo-2.png" />
+            </div>
+            <div class="salutation">Hi, {{username}}</div>
+            <br>
+            <div class="content">
+                <p>
+                Welcome to Canteen management app! Your account has been successfully created. Below are your login details:
+                </p>
+            </div>
+
+            <div class="info-box">
+                <p><strong>Your domain URL:</strong> https://{{domainUrl}}</p>
+                <p><strong>Email:</strong> {{email}}</p>
+                <p><strong>Password:</strong> {{password}}</p>
+            </div>
+            
+            <br>
+            <div class="closing">
+                <p>
+                    <i><strong>NOTE:</strong> Please change your password once you log in for security purposes.</i>
+                </p>
+            </div>
+            <br>
+            <br>
+            <div class="regards">
+                <p>Regards,</p>
+                <p><strong>Genesis Technologies</strong></p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

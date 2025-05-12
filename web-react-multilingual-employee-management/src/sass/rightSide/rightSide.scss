@@ -1,0 +1,72 @@
+@import '../abstracts/mixins.scss';
+.status__input {
+  @include displayFlex(column, center, center);
+  width: 100%;
+
+  .drop__down__box {
+    margin-top: 8px;
+    width: 100%;
+  }
+  #drop__down__box--active {
+    width: 409px;
+  }
+  #drop__down__box--off {
+    width: 409px;
+  }
+
+  .drop__down__header__select {
+    // width: 413px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+.popup__right__inputs__container {
+  @include displayFlex(column, center, center);
+}
+
+// .popup__right__inputs__container::-webkit-scrollbar {
+//     width: 10px;
+//   }
+
+//   .popup__right__inputs__container::-webkit-scrollbar-track {
+//     background: #f1f1f1;
+//   }
+
+//   .popup__right__inputs__container::-webkit-scrollbar-thumb {
+//     background: #888;
+//   }
+
+// .popup__right__inputs__container::-webkit-scrollbar-thumb:hover {
+//   background: #555;
+// }
+
+.popup__right__inputs__container::-webkit-scrollbar {
+  height: 15px;
+  width: 8px;
+}
+
+.popup__right__inputs__container::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(177, 177, 177);
+  border-radius: 10px;
+  margin-right: 189px;
+}
+
+.popup__right__inputs__container::-webkit-scrollbar-thumb {
+  background: #0091ff;
+  border-radius: 10px;
+}
+
+.order__inputs__popup {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.order__number__input {
+  width: 100%;
+
+  & input {
+    width: 100% !important;
+  }
+}

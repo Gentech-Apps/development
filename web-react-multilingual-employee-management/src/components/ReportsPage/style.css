@@ -1,0 +1,57 @@
+::placeholder {
+  color: grey;
+  text-align: right;
+  margin-top: 10px;
+  margin-left: 10px;
+  font-family: 'Rubik';
+}
+
+.pdf_report_page textarea {
+  font-family: 'Rubik';
+}
+
+.pdf_report_page .MuiTypography-body1 {
+  font-family: 'Rubik' !important;
+  font-size: 16px !important;
+}
+
+.loading-overlay {
+  display: none;
+  background: rgba(26, 26, 26, 0.7);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  top: 0;
+}
+
+.loading-overlay-image-container {
+  position: fixed;
+  z-index: 7;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+}
+
+.loading-overlay-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 5px;
+}
+
+/*.pdf_report_page .rotate span {
+    display: block;
+    white-space: nowrap;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+}
+
+.pdf_report_page .MuiTableCell-alignRight.rotate {
+    padding: 10px;
+}
+
+.pdf_report_page .MuiTable-root th {
+    border-radius: 0 !important;
+    border-top-left-radius: 0 !important;
+}*/

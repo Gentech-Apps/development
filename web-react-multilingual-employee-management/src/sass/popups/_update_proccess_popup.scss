@@ -1,0 +1,122 @@
+@import '../abstracts/mixins';
+@import '../abstracts/variables';
+
+.update-proccess-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  @include displayFlex(row, center, center);
+
+  &__curtain {
+    background: $popup-bg;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  &__content {
+    height: 400px;
+    width: 600px;
+    z-index: 300;
+    background-color: white;
+    border-radius: 10px;
+    @include displayFlex(row, center, center);
+  }
+}
+
+.exit__icon__update__popup {
+  position: absolute;
+  top: 10px;
+  right: 9px;
+}
+
+.completions__checkbox {
+  @include displayFlex(row, unset, center);
+  transform: translateX(7px);
+  margin-top: 10px;
+  @include mediaMaxWidth(800px) {
+    position: absolute;
+    top: 87px;
+    left: 29px;
+  }
+}
+
+.info--popup {
+  // width: 222px;
+  width: 183px;
+  z-index: 999;
+  height: auto;
+  text-overflow: ellipsis;
+  position: absolute;
+  border: 2px solid #bebebe;
+  border-radius: 6px;
+  background-color: white;
+  color: #455768;
+  direction: rtl;
+  // box-shadow: 10px 10px 4px -10px rgba(0,0,0,0.75);
+  box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25);
+  @include displayFlex(row, unset, center);
+  @include mediaMaxWidth(800px) {
+    direction: rtl;
+  }
+}
+.info--popup hr {
+  margin: 0px;
+  border: 1px solid #e2e2e2;
+  border-block-end-style: none;
+}
+.info--header {
+  background-color: #f1f1f1;
+  font-weight: 800;
+  font-size: 12px;
+  padding: 4%;
+}
+.info--content {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.5;
+  padding: 4%;
+  direction: rtl;
+}
+.info--content h4 {
+  font-weight: 800;
+}
+.info--content h4::first-letter {
+  text-transform: uppercase;
+}
+.info--content p::first-letter {
+  text-transform: uppercase;
+}
+.info--footer {
+  padding: 1%;
+  background-color: transparent;
+  font-weight: 800;
+  font-size: 12px;
+  color: #6c7389;
+}
+.info--footer::first-letter {
+  text-transform: uppercase;
+}
+
+.info--footer .add-btn {
+  padding: 1%;
+  border: none;
+  background-color: transparent;
+  border-radius: 6px;
+}
+.info--footer .add-btn:hover {
+  background-color: #f2f2f2;
+}
+
+.add--task--icon {
+  width: 16px;
+  position: relative;
+  margin-right: 3px;
+  top: 3px;
+}
