@@ -1,0 +1,54 @@
+.modal-material {
+  .MuiPaper-root {
+    min-width: 400px;
+    min-height: 200px;
+    padding: 20px 20px;
+  }
+  .MuiDialogActions-spacing > :not(:first-child) {
+    margin: auto;
+  }
+
+  .modal-container {
+    flex: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-height: 800px;
+  }
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    font-size: medium;
+    font-family: Rubik;
+    > h2 {
+      font-family: Rubik;
+      font-weight: 300;
+    }
+  }
+  .close {
+    font-size: 25px;
+    //color: #000000;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    i {
+      font-size: 20px;
+      cursor: pointer;
+      &:hover {
+        color: red;
+      }
+    }
+  }
+  .close.without-label {
+    justify-content: flex-end;
+  }
+  .button-wrapper {
+    margin: auto;
+    // width: 40%;
+  }
+}

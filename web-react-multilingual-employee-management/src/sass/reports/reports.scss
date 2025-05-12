@@ -1,0 +1,336 @@
+@import '../abstracts/mixins.scss';
+@import '../abstracts/variables.scss';
+
+.reports__container {
+  @include displayFlex(row, unset, unset);
+}
+
+.reports-page {
+  background-color: #f7f7f7;
+  @include displayFlex(row);
+
+  &__side-nav {
+    height: calc(100vh - 100px);
+    width: 230px;
+    background-color: white;
+    @include displayFlex(column, flex-start, center);
+    position: relative;
+
+    & > header {
+      @include displayFlex(column, unset, flex-start);
+      padding-top: 16px;
+    }
+
+    & > header > h6 {
+      line-height: 1.31;
+      letter-spacing: 0.28px;
+      padding-bottom: 16px;
+    }
+
+    & > header > div {
+      width: 200px;
+      height: 40px;
+      border-radius: 4px;
+      font-weight: 100;
+      border: solid 1px #c6c6c6;
+      background-color: white;
+      @include displayFlex(row, center, center);
+      margin-bottom: 10px;
+    }
+
+    & > header > p {
+      opacity: 0.3;
+      margin-bottom: 10px;
+      align-self: center;
+    }
+
+    & > header > button {
+      width: 100%;
+      height: 36px;
+      border-radius: 20px;
+      border: none;
+      background-color: $very-light-blue;
+      @include displayFlex(row, center, center);
+      margin-top: 10px;
+      color: $underlined-blue;
+      font: inherit;
+    }
+
+    & > header > button > svg {
+      margin-left: 5px;
+      font-size: 19px;
+    }
+
+    //
+
+    &__middle-section {
+      border-top: 1px solid $extra-faded-black;
+      border-bottom: 1px solid $extra-faded-black;
+      width: 100%;
+      margin: 15px 0;
+      @include displayFlex(row, center, center);
+    }
+
+    &__middle-section > button {
+      @include btnchange();
+      @include generalButtonStyle();
+      margin: 15px 0;
+      width: 200px;
+    }
+
+    &__middle-section.disabled > button {
+      background-color: $gray-background;
+      color: $extra-faded-black;
+      cursor: wait;
+    }
+
+    //
+
+    &__export-section {
+      width: 100%;
+      padding: 0 11px;
+      @include displayFlex(column, center, center);
+    }
+
+    &__export-section > h6 {
+      align-self: flex-start;
+      margin-bottom: 15px;
+    }
+
+    &__export-section > button:nth-of-type(1) {
+      width: 200px;
+      height: 36px;
+      border-radius: 18px;
+      background-color: rgba(241, 86, 66, 0.1);
+      line-height: 1.5;
+      letter-spacing: 0.25px;
+      color: #f15642;
+      border: none;
+      font: inherit;
+      font-size: 14px;
+      margin-bottom: 15px;
+    }
+
+    &__export-section > a {
+      width: 200px;
+      height: 36px;
+      border-radius: 18px;
+      background-color: rgba(80, 124, 92, 0.1);
+      line-height: 1.5;
+      letter-spacing: 0.25px;
+      color: #507c5c;
+      border: none;
+      font: inherit;
+      font-size: 14px;
+      text-decoration: none;
+      @include displayFlex(row, center, center);
+    }
+  }
+
+  //reportPage component
+
+  &__reports {
+    margin: 15px;
+    width: 804px;
+    height: calc(100vh - 130px);
+    background-color: white;
+
+    & > header {
+      width: 804px;
+      height: 54px;
+      background-color: $very-light-blue;
+      @include displayFlex(row, space-between, center);
+      padding: 0 19px;
+    }
+
+    &__general-data {
+      padding: 20px;
+      @include displayFlex(column, flex-start, center);
+      border-bottom: 1px solid rgba(0, 145, 255, 0.2);
+    }
+
+    &__general-data > div > span {
+      @include displayFlex(row, flex-start, center);
+      width: 33.3333%;
+
+      & > p:nth-of-type(1) {
+        font-size: 18px;
+      }
+
+      & > p:nth-of-type(2) {
+        font-size: 18px;
+        font-weight: 500;
+        margin-right: 33px;
+      }
+    }
+
+    &__general-data--section1 {
+      @include displayFlex(row, flex-start, center);
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    &__general-data--section2 {
+      @include displayFlex(row, space-between, center);
+      width: 100%;
+      align-self: flex-start;
+    }
+
+    //
+
+    &__main-data {
+      overflow-y: scroll;
+      height: calc(100% - 200px);
+
+      &__header {
+        @include displayFlex(row, unset, center);
+        margin-top: 25px;
+        padding: 0 23px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid rgba(0, 145, 255, 0.2);
+      }
+
+      &__header > p {
+        font-size: 13px;
+        color: black;
+        opacity: 0.6;
+        width: calc(100% / 7);
+        position: relative;
+        cursor: pointer;
+        //    text-align: center;
+
+        .sort__icon {
+          position: absolute;
+          bottom: 2px;
+          margin-right: 8px;
+        }
+      }
+      &__header > p:hover {
+        color: #0091ff;
+      }
+      &__header > .checkboxTittle {
+        text-align: center;
+      }
+    }
+
+    &__main-data__item--delayed > p {
+      color: $warning;
+    }
+
+    &__main-data__item {
+      width: 100%;
+      height: 38px;
+      background-color: white;
+      padding: 0 23px;
+      @include displayFlex(row, unset, center);
+
+      &:nth-of-type(odd) {
+        background-color: #f4f4f4;
+      }
+
+      & > p {
+        padding: 0 3px;
+        font-size: 13px;
+        width: calc(100% / 7);
+        // text-align: center;
+      }
+
+      & > input {
+        padding: 0 3px;
+        font-size: 13px;
+        width: calc(100% / 7);
+      }
+    }
+  }
+}
+
+// RANGE DP
+
+.reports-page__side-nav__calendar {
+  // background: white;
+  // position: absolute;
+  // right:100%;
+  // top:50%;
+  // z-index: 1000;
+  // // width: 640px;
+  // box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.25);
+  // padding: 20px;
+  // position: relative;
+  // @include displayFlex(column,center,center);
+
+  // &__arrow {
+  //     width: 24px;
+  //     height: 24px;
+  //     border-radius: 50%;
+  //     background-color: #d6d6d6;
+  //     cursor: pointer;
+  //     @include displayFlex(column,center,center);
+
+  //     & > svg {
+  //         color:white;
+  //         font-weight: bold;
+  //         font-size: 22px;
+  //     }
+  // }
+
+  // &__section--1 {
+  //     @include displayFlex(row,center,center);
+  //     width:100%;
+  //     position: relative;
+  // }
+
+  // &__section--2 {
+  //     @include displayFlex(row,flex-end,flex-end);
+  //     width:100%;
+  //     padding-top:10px;
+  //     border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+  //     & > button:nth-of-type(2) {
+  //         @include generalButtonStyle();
+  //         @include btnchange();
+  //         @include displayFlex(row,center,center);
+  //         height: 30px;
+  //         width: 80px;
+  //         font-size: 13px;
+  //     }
+
+  //     & > button:nth-of-type(1) {
+  //         @include generalButtonStyle();
+  //         @include btnCancel();
+  //         @include displayFlex(row,center,center);
+  //         height: 30px;
+  //         width: 80px;
+  //         font-size: 13px;
+  //     }
+  // }
+
+  // & .react-datepicker {
+  //     box-shadow: none!important;
+  // }
+
+  // & .react-datepicker__day {
+  //     font-size: 10px;
+  //     border-radius: 0!important;
+  //     color: #013a66!important;
+  // }
+
+  // & .react-datepicker__header__dropdown{
+  //     margin: 0!important;
+  // }
+
+  // & .react-datepicker__day--selected.react-datepicker__day--selected,
+  // & .react-datepicker__day:hover.react-datepicker__day:hover {
+  //     color: white!important;
+  //     background-color: rgba(62, 155, 255, 1)!important;
+  // }
+
+  // & .react-datepicker__day--in-range {
+  //     background-color: rgba(62, 155, 255, 0.3)!important;
+  // }
+
+  // & .react-datepicker__navigation--previous,
+  // & .react-datepicker__navigation--next,
+  // & .react-datepicker__current-month::after {
+  //     display: none;
+  // }
+}

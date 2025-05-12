@@ -1,0 +1,452 @@
+@import '../abstracts/mixins.scss';
+@import '../abstracts/variables.scss';
+
+.reservation-popup {
+  &__curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    transition: opacity 0.2s;
+    opacity: 0;
+
+    &--active {
+      transition: opacity 0.2s;
+      opacity: 1;
+    }
+  }
+
+  &__cancel {
+    color: white;
+    z-index: 10011;
+    cursor: pointer;
+    width: 50px !important;
+    height: 50px !important;
+    position: absolute;
+    left: 480px;
+    top: 10px;
+    opacity: 0;
+    transition: opacity 0.2;
+    // @media (max-width: 430px) {
+    //     position: relative;
+    //     color: red;
+    //     // left:210px;
+    //     // top:0px;
+    // }
+
+    &--active {
+      opacity: 1;
+      transition: opacity 0.2;
+      // @media (max-width: 400px) {
+      //     color: red;
+      // }
+    }
+  }
+
+  &__cancel__inner {
+    display: none;
+    @media (max-width: 430px) {
+      display: block;
+      z-index: 10011;
+      cursor: pointer;
+      width: 50px !important;
+      height: 50px !important;
+      color: #0091ff;
+    }
+
+    &--active {
+      display: none;
+      opacity: 0;
+      @media (max-width: 430px) {
+        opacity: 1;
+        transition: opacity 0.2;
+        display: block;
+        z-index: 10011;
+        cursor: pointer;
+        width: 50px !important;
+        height: 50px !important;
+        color: #0091ff;
+      }
+    }
+  }
+
+  &__submit {
+    position: absolute;
+    box-shadow: 0 -10px 23px -18px rgba(0, 0, 0, 0.3);
+    bottom: 0;
+    left: 0;
+    // width: 474px;
+    width: 100%;
+    min-width: 375px;
+    max-width: 474px;
+    height: 46px;
+    background-color: white;
+    z-index: 1001;
+    padding: 5px 0;
+    @include displayFlex(row, center, center);
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    @include mediaMaxWidth(800px) {
+      bottom: -54px;
+    }
+
+    & .loader-new {
+      background-color: transparent;
+
+      & .lds-ellipsis div {
+        background-color: white;
+      }
+    }
+
+    &--active {
+      transition: transform 0.2s;
+      transform: translateX(0);
+    }
+
+    & > button {
+      @include generalButtonStyle(260px);
+      @include btnchange();
+    }
+  }
+
+  &__content {
+    @include displayFlex(column, flex-start, flex-start);
+    position: absolute;
+    top: 0;
+    left: 0;
+    // width: 474px;
+    width: 100%;
+    min-width: 375px;
+    max-width: 474px;
+    height: calc(100vh - 46px);
+    padding: 25px;
+    background: white;
+    z-index: 1001;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    overflow-y: scroll;
+    @include mediaMaxWidth(800px) {
+      // height: auto;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &--active {
+      transition: transform 0.2s;
+      transform: translateX(0);
+    }
+
+    &__all-values {
+      width: 100%;
+      @include displayFlex(column, flex-start, flex-start);
+    }
+
+    &__form-group {
+      width: 100%;
+      margin-bottom: 10px;
+      @include displayFlex(column, space-between, flex-start);
+      // margin-bottom:20px;
+
+      & > label,
+      &--inner-part > label {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      &--inner-part {
+        width: calc(50% - 10px);
+        @include displayFlex(column, space-between, flex-start);
+      }
+    }
+
+    &__form-group-Metalpress {
+      width: 100%;
+      @include displayFlex(column, space-between, flex-start);
+      // margin-bottom:20px;
+
+      & > label,
+      &--inner-part > label {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+
+      &--inner-part {
+        width: calc(50% - 10px);
+        @include displayFlex(column, space-between, flex-start);
+      }
+    }
+
+    &__form-group--row {
+      @include displayFlex(row, space-between, flex-start);
+      flex-wrap: wrap;
+    }
+
+    & > .content-wrapper {
+      max-width: 100%;
+      & > header {
+        font-size: 30px;
+        font-weight: 300;
+        margin-bottom: 20px;
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        @include mediaMaxWidth(800px) {
+          justify-content: space-between;
+        }
+        > span {
+          width: 50%;
+          display: inline-block;
+          @include mediaMaxWidth(800px) {
+            width: 20%;
+          }
+        }
+        > section {
+          display: flex;
+          width: 50%;
+          flex-direction: row;
+          justify-content: center;
+          align-items: flex-end;
+        }
+      }
+    }
+
+    & > header {
+      font-size: 30px;
+      font-weight: 300;
+      margin-bottom: 20px;
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      @include mediaMaxWidth(800px) {
+        justify-content: space-between;
+      }
+      > span {
+        width: 50%;
+        display: inline-block;
+        @include mediaMaxWidth(800px) {
+          width: 20%;
+        }
+      }
+      > section {
+        display: flex;
+        width: 50%;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+      }
+    }
+
+    &__processes {
+      border-top: 2px solid rgba(0, 0, 0, 0.1);
+      margin-top: 10px;
+      padding-top: 30px;
+      width: 100%;
+
+      &--error {
+        font-size: 14px;
+        color: $warning;
+        margin-bottom: 5px;
+        margin-right: 5px;
+      }
+    }
+
+    &__processes_Metalpress {
+      width: 100%;
+      max-height: 600px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      // @include mediaMaxWidth(800px){
+      //     // height: auto;
+      //     overflow-y: scroll;
+      //     overflow-x: hidden;
+      //     max-height: 150px;
+      //     -webkit-overflow-scrolling: touch;
+      // }
+
+      &--error {
+        font-size: 14px;
+        color: $warning;
+        margin-bottom: 5px;
+        margin-right: 5px;
+      }
+    }
+
+    &__processes--add-reservation {
+      @include displayFlex(row, flex-start, center);
+      color: #0091ff;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    &__processes--add-reservation-Metalpress {
+      @include displayFlex(row, flex-start, center);
+      color: #0091ff;
+      font-size: 15px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+  }
+}
+
+//
+
+.quantity-process-picker {
+  width: 100%;
+  height: 48px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  margin-bottom: 15px;
+  @include displayFlex(row, space-between, center);
+  padding: 5px 10px;
+  // padding-right:19px;
+
+  & > section {
+    width: 100%;
+    height: 100%;
+    @include displayFlex(row, space-between, center);
+  }
+
+  & > section > div {
+    @include displayFlex(column, space-between, flex-start);
+    position: relative;
+    height: 100%;
+
+    & > label {
+      color: #0091ff;
+      font-size: 12px;
+    }
+
+    & > input {
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+      background: transparent;
+      font-size: 14px;
+      // padding-right: 15px;
+    }
+  }
+
+  &__delete-section {
+    @include displayFlex(row, flex-start, center);
+    justify-content: flex-start !important;
+
+    & > svg {
+      margin-left: 8px;
+      cursor: pointer;
+    }
+  }
+
+  &__section1 {
+    width: 145px;
+    font-size: 14px;
+
+    & > h3 {
+      width: 100%;
+      @include displayFlex(row, space-between, center);
+      border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+
+      & > span > svg {
+        height: 20px !important;
+        width: 20px !important;
+      }
+    }
+
+    &__dropdown {
+      @include appDropdown();
+      max-height: 200px;
+      overflow-y: scroll;
+    }
+
+    &__dropdown--active {
+      @include appDropdownActive();
+    }
+
+    &__dropdown > li {
+      @include appDropdownItem();
+      font-size: 14px;
+    }
+
+    &__dropdown > li:hover {
+      background-color: #f9f9f9;
+    }
+  }
+
+  &__section2 {
+    width: 80px;
+    padding: 0 17px;
+
+    & > input {
+      width: 100%;
+      padding-right: 15px;
+    }
+
+    &::after {
+      content: '%';
+      position: absolute;
+      right: 17px;
+      bottom: 3px;
+      color: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__section3 {
+    width: 80px;
+
+    & > input {
+      width: 100%;
+    }
+
+    &::after {
+      content: '₪';
+      position: absolute;
+      left: 0px;
+      bottom: 3px;
+      color: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__section4 {
+    justify-content: center !important;
+    margin-right: 10px;
+    cursor: pointer;
+
+    & > svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  &__section5 {
+    width: 100px;
+    padding-right: 17px;
+
+    & > input {
+      width: 100%;
+    }
+  }
+}
+
+//loader
+.reservation-popup .loader-new {
+  & .lds-ellipsis div:nth-child(1) {
+    left: 8px;
+    animation: lds-ellipsis1-mobile 0.6s infinite;
+  }
+  & .lds-ellipsis div:nth-child(2) {
+    left: 8px;
+    animation: lds-ellipsis2-mobile 0.6s infinite;
+  }
+  & .lds-ellipsis div:nth-child(3) {
+    left: 32px;
+    animation: lds-ellipsis2-mobile 0.6s infinite;
+  }
+  & .lds-ellipsis div:nth-child(4) {
+    left: 54px;
+    animation: lds-ellipsis3-mobile 0.6s infinite;
+  }
+}

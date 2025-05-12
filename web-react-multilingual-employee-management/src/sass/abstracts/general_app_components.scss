@@ -1,0 +1,149 @@
+@import './mixins.scss';
+@import './variables.scss';
+
+.general-dropdown {
+  @include generalInputStyle();
+  @include displayFlex(row, space-between, center);
+  padding: 0 10px;
+  position: relative;
+
+  &--error {
+    @include errorMessage();
+  }
+
+  & > h3 {
+    width: 100%;
+    height: 100%;
+    font-size: 14px;
+    @include displayFlex(row, space-between, center);
+
+    & > input {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      left: 0;
+      border: 0;
+      background: transparent;
+      padding-right: 10px;
+      font-size: 14px;
+    }
+  }
+
+  & > ul {
+    @include appDropdown();
+  }
+
+  & > ul > li {
+    @include appDropdownItem();
+
+    &:hover {
+      background-color: $gray-background2;
+    }
+  }
+
+  &--active > ul {
+    @include appDropdownActive();
+    z-index: 100;
+  }
+}
+
+//input
+
+.general-input {
+  @include generalInputStyle();
+  @include displayFlex(row, space-between, center);
+  padding: 0 10px;
+  position: relative;
+
+  & > input {
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font: inherit;
+    font-size: 14px;
+    @include removeSpinnersFromNumberInput();
+  }
+}
+
+//date picker
+
+.general-datepicker {
+  @include generalInputStyle();
+  position: relative;
+
+  &__date {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 10px;
+    font-size: 14px;
+    pointer-events: none;
+  }
+
+  &--error {
+    @include errorMessage();
+  }
+
+  & .react-datepicker-wrapper {
+    width: 100%;
+    height: 100%;
+  }
+
+  & .react-datepicker-popper[data-placement^='bottom'] {
+    right: unset;
+    left: -15px !important;
+  }
+
+  & .react-datepicker__year-read-view--down-arrow {
+    top: 3px;
+    right: 50px;
+  }
+
+  & .react-datepicker__year-dropdown {
+    @include appDropdown();
+    @include appDropdownActive;
+    border: 0;
+    width: 100px;
+    left: 50%;
+    right: unset;
+    top: 50px;
+    transform: translateX(-50%) scale(1);
+    height: fit-content;
+    padding: 0;
+    min-height: unset;
+  }
+
+  & .react-datepicker__current-month::after {
+    display: none;
+  }
+
+  & .react-datepicker__navigation {
+    padding: 6px;
+  }
+
+  & .react-datepicker__navigation--years {
+    padding: 0;
+  }
+}
+
+// general-textarea
+
+.general-textarea {
+  @include generalInputStyle();
+  height: 150px;
+  & > textarea {
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    font: inherit;
+    font-size: 14px;
+    resize: none;
+    padding: 10px;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

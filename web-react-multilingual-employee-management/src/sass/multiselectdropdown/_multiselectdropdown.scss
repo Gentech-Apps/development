@@ -1,0 +1,100 @@
+@import '../abstracts/mixins';
+@import '../abstracts/variables';
+
+.multiselect-dropdown {
+  max-width: 100%; /* ---------------------- width:100%*/
+  position: relative;
+  cursor: pointer;
+
+  &__selected {
+    @include displayFlex(row, flex-start);
+    margin-bottom: 16px;
+    height: 22px;
+
+    & > p {
+      margin-left: 5px;
+      max-width: 225px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      color: $faded-black;
+    }
+  }
+
+  &__selected-row {
+    @include displayFlex(row, flex-start);
+    // margin-bottom:16px;
+    height: 22px;
+
+    & > p {
+      margin-left: 5px;
+      max-width: 225px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      color: $faded-black;
+    }
+  }
+
+  &__menu {
+    max-width: 337px;
+    width: fit-content;
+    position: absolute;
+    top: 100%;
+    z-index: 20;
+    //to be removed
+    height: 196px;
+    overflow: scroll;
+    border-radius: 5px;
+    padding: 7px;
+    box-shadow: 0 7px 25px 0 rgba(0, 0, 0, 0.25);
+    background-color: #ffffff;
+    transform: scale(0);
+    transition: transform 0.2s;
+    transform-origin: top;
+    @include displayFlex(row);
+    flex-wrap: wrap;
+
+    &--active {
+      transform: scale(1);
+      transition: transform 0.2s;
+      transform-origin: top;
+    }
+
+    &__department {
+      width: 295px;
+    }
+
+    &__department:nth-of-type(odd) {
+      margin-left: 7px;
+    }
+
+    &__department > header {
+      width: 100%;
+      height: 23px;
+      background-color: $gray-background2;
+      @include displayFlex(row, center, center);
+    }
+
+    &__department > header > p {
+      padding: 0 5px;
+      text-align: center;
+      font-size: 14px;
+      @include oneLinerTextDots();
+    }
+
+    &__department > main {
+      padding: 7px;
+    }
+
+    &__department > main > div {
+      @include displayFlex(row, flex-start, center);
+    }
+
+    &__department > main > div > p {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: 5px;
+    }
+  }
+}

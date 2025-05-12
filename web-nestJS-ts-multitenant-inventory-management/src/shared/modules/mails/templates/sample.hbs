@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>no-reply</title>
+    <style>
+        body {
+            display: flex;
+            font-size: 16px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+        }
+        section .passcode {
+            margin-left: 30%;
+        }
+        .passcode {
+            border: 2px solid yellow;
+            font-weight: bolder;
+            width: 14%;
+            background-color: whitesmoke;
+            text-align: center;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section>
+            <div style="align: center">
+                <img src="https://genesistechnologies.in/wp-content/uploads/2019/03/cropped-G_Logo-2.png" />
+            </div>
+            <div class="salutation">Hi, there</div>
+            <br>
+            <div class="content">
+                <p>
+                Please use following <strong>OTP</strong> to verify yourself.
+                </p>
+            </div>
+            <div class="passcode">
+                {{otp}}
+            </div>
+            <br>
+            <div class="closing">
+                <p>
+                    <i><strong>NOTE:</strong> This OTP will expire in 10 minutes. Please use it promptly.</i>
+                </p>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="regards">
+                <p>Regards,</p>
+                </p>Genesis Technologies</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

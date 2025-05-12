@@ -1,0 +1,201 @@
+@import '../abstracts/mixins.scss';
+@import '../abstracts/variables.scss';
+
+.backlogs-reports {
+  @include displayFlex(row);
+  height: calc(100vh - 100px);
+
+  &__main {
+    flex-grow: 1;
+    height: 100%;
+    @include displayFlex(column);
+
+    // & > div {
+    //     height: calc(100% - 54px);
+    //     overflow-y: scroll;
+    // }
+
+    &__no-results {
+      width: 100%;
+      height: 100%;
+      @include displayFlex(row, center, center);
+
+      & > h1 {
+        font-size: 30px;
+      }
+    }
+
+    & > header {
+      width: 100%;
+      height: 54px;
+      background-color: $very-light-blue;
+      @include displayFlex(row, space-between, center);
+      padding: 0 14px;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    & > header > span {
+      @include displayFlex(row, flex-start, center);
+      flex-grow: 1;
+    }
+
+    & > header > span > p {
+      font-size: 21px;
+      width: 160px;
+    }
+
+    & > header > span > .general-dropdown {
+      width: 200px;
+      border: none;
+      background: transparent;
+      border-radius: 0;
+      padding-left: 0px;
+      border-bottom: solid 1px black;
+    }
+
+    & > header > p {
+      font-size: 18px;
+    }
+
+    &__order {
+      @include displayFlex(row);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    &__order__data {
+      width: 180px;
+      min-height: 90px;
+      @include displayFlex(column, center, center);
+      border-left: 1px solid rgba(0, 0, 0, 0.4);
+      border-right: 1px solid rgba(0, 0, 0, 0.4);
+    }
+
+    &__order__data > span {
+      margin-bottom: 5px;
+      font-size: 14px;
+      text-align: center;
+      @include displayFlex(row);
+    }
+
+    &__order__processes {
+      flex-grow: 1;
+      @include displayFlex(column, center, center);
+      padding: 10px;
+    }
+
+    &__order__processes__item {
+      width: 100%;
+      min-height: 120px;
+      border-radius: 4px;
+      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.2);
+      background-color: #ffffff;
+      margin-bottom: 8px;
+      padding: 5px;
+      padding-right: 15px;
+      @include displayFlex(row, space-between, center);
+      position: relative;
+    }
+
+    &__order__processes__item--quantity {
+      min-height: 38px;
+      flex-direction: column !important;
+      width: 140px;
+      align-items: flex-start !important;
+
+      & > b:first-of-type {
+        margin-bottom: 5px;
+      }
+
+      & > p {
+        margin-bottom: 5px;
+        font-size: 14px;
+      }
+
+      & > b {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      & > b:first-of-type {
+        margin-left: 15px;
+      }
+
+      & > b:nth-of-type(2) {
+        width: 140px;
+      }
+    }
+
+    &__order__processes__item > h6 {
+      font-size: 20px;
+      text-decoration: underline;
+      color: $underlined-blue;
+      position: absolute;
+      top: 5px;
+      cursor: pointer;
+    }
+
+    &__order__processes__item > b {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    // &__order__processes__item > b:nth-of-type(2){
+    //     width: 140px;
+    // }
+
+    &__order__processes__item > span {
+      @include displayFlex(row, unset, center);
+      font-size: 14px;
+    }
+
+    &__order__processes__item > p {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.6);
+      width: 50%;
+    }
+
+    &__order__processes__item > button {
+      @include generalButtonStyle(140px);
+      @include btnchange();
+      border-radius: 6px;
+    }
+  }
+}
+
+.Annual-financial-header {
+  width: 100%;
+  height: 54px;
+  @include displayFlex(row, space-between, center);
+  padding: 0 14px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+.backlog-report-scroll {
+  overflow-x: auto;
+}
+
+.order-process-notes {
+  width: 210px;
+  display: flex;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  padding-right: 5px;
+}
+
+.task-holder {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.task-holder > span {
+  display: flex;
+  flex-direction: row;
+}
+
+.task-date-and-employee {
+  color: rgba(0, 0, 0, 0.862);
+  font-size: 12px;
+}

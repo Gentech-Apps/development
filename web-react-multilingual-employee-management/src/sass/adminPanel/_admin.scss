@@ -1,0 +1,49 @@
+@import '../abstracts/variables.scss';
+@import '../abstracts/mixins.scss';
+
+.admin__panel {
+  .header__line {
+    height: 45px;
+  }
+  .header__line {
+    @media screen and (max-width: 1500px) {
+      .header__tabs.normal {
+        display: none;
+      }
+    }
+    @media screen and (min-width: 1500px) {
+      .header__tabs.small {
+        display: none;
+      }
+    }
+  }
+
+  .header__line .header__tabs div {
+    height: 45px;
+  }
+
+  .header__line .header__tabs .header__selected > div {
+    background-color: rgba(0, 145, 255, 0.1);
+    border-top: 2px solid #0091ff;
+    color: #0091ff;
+    padding: 11px;
+
+    @include mediaMaxWidth(800px) {
+      padding: 0;
+    }
+  }
+  .admin__control__panel {
+    display: flex;
+    height: 30px;
+  }
+  .button__wrapper {
+    margin-left: 11px;
+    margin-right: 10px;
+  }
+}
+
+.admin_page {
+  width: 100%;
+  height: calc(100vh - 105px);
+  overflow-y: hidden;
+}
