@@ -1,0 +1,59 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "bffweb",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "APIGateway",
+          "Version": "1.0",
+          "Url": "http://localhost:5205/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "userManagement",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "UserManagement",
+          "Version": "1.0",
+          "Url": "http://localhost:5205/userManagement/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "notification",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "Notification",
+          "Version": "1.0",
+          "Url": "http://localhost:5205/notification/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "s3upload",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "S3Upload",
+          "Version": "1.0",
+          "Url": "http://localhost:5205/s3upload/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "serviceRequestManagement",
+      "TransformByOcelotConfig": true,
+      "Config": [
+        {
+          "Name": "serviceRequestManagement",
+          "Version": "1.0",
+          "Url": "http://localhost:5205/serviceRequestManagement/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ]
+}

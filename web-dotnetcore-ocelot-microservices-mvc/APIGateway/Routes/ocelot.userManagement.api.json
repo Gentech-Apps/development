@@ -1,0 +1,77 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "userManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "UserManagement",
+          "Port": "7091"
+        }
+      ],
+      "UpstreamPathTemplate": "/userManagement/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Account",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "userManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "UserManagement",
+          "Port": "7091"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Login",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Register",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "userManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "UserManagement",
+          "Port": "7091"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/Register",
+      "UpstreamHttpMethod": [
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "userManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "UserManagement",
+          "Port": "7091"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/userManagement/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    }
+  ]
+}

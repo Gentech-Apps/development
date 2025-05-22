@@ -1,0 +1,22 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "propertiesManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "PropertiesManagement",
+          "Port": "7249"
+        }
+      ],
+      "UpstreamPathTemplate": "/propertiesManagement/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ]
+    }
+  ]
+}
