@@ -1,0 +1,48 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "serviceRequestManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ServiceRequestManagement",
+          "Port": "5073"
+        }
+      ],
+      "UpstreamPathTemplate": "/serviceRequestManagement/swagger/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "serviceRequestManagement",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ServiceRequestManagement",
+          "Port": "5073"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/serviceRequestManagement/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "AddHeadersToRequest": {
+        "claims": "Claims > value |",
+        "claims_name": "Claims[name] > value |"
+      }
+    }
+  ]
+}

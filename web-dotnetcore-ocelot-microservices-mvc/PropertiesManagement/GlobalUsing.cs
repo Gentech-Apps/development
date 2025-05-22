@@ -1,0 +1,10 @@
+﻿global using MediatR;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using System.ComponentModel.DataAnnotations;
+global using JwtAuthanticationManager;
+global using PropertiesManagement.CQRS.Queries;
+global using PropertiesManagement.Database;
+global using PropertiesManagement.Helper;
+global using PropertiesManagement.CQRS.Repositories.Interfaces;

@@ -1,0 +1,44 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "s3upload",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "S3OperationManager",
+          "Port": "5187"
+        }
+      ],
+      "upstreampathtemplate": "/s3upload/swagger/{everything}",
+      "upstreamhttpmethod": [
+        "get",
+        "post",
+        "put",
+        "delete"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "s3upload",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "S3OperationManager",
+          "Port": "5187"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/s3upload/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "AuthenticationOptions": {
+      "AuthenticationProviderKey": "Bearer",
+      "AllowedScopes": []
+       }
+    }
+  ]
+}

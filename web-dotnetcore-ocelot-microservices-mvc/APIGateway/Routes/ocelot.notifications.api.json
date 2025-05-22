@@ -1,0 +1,44 @@
+{
+  "Routes": [
+    {
+      "DownstreamPathTemplate": "/swagger/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "notification",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notifications",
+          "Port": "7087"
+        }
+      ],
+      "upstreampathtemplate": "/notification/swagger/{everything}",
+      "upstreamhttpmethod": [
+        "get",
+        "post",
+        "put",
+        "delete"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/{everything}",
+      "DownstreamScheme": "http",
+      "SwaggerKey": "notification",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "notifications",
+          "Port": "7087"
+        }
+      ],
+      "UpstreamPathTemplate": "/api/notification/{everything}",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST",
+        "PUT",
+        "DELETE"
+      ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      }
+    }
+  ]
+}
