@@ -1,0 +1,55 @@
+{
+    "ordersForVendorList": [
+        {
+            "id": 15268,
+            "userId": 12,
+            "itemId": 52,
+            "quantity": 2,
+            "dateTime": "26/09/2023 11:46 AM",
+            "status": "pending",
+            "amount": 48,
+            "deviceId": "RMX1971199fbdfe2c572a9c",
+            "name": "Shrikant Jaiswal",
+            "nameHindi": "श्रीकांत जायसवाल",
+            "itemName": "Idli Sambhar (2 Pcs)",
+            "itemPrice": 24,
+            "itemNameHindi": "इडली संभर (2 नग)",
+            "rating": 0,
+            "comment": null
+        },
+        {
+            "id": 15269,
+            "userId": 12,
+            "itemId": 52,
+            "quantity": 2,
+            "dateTime": "26/09/2023 11:46 AM",
+            "status": "pending",
+            "amount": 48,
+            "deviceId": "RMX1971199fbdfe2c572a9c",
+            "name": "Shrikant Jaiswal",
+            "nameHindi": "श्रीकांत जायसवाल",
+            "itemName": "Idli Sambhar (2 Pcs)",
+            "itemPrice": 24,
+            "itemNameHindi": "इडली संभर (2 नग)",
+            "rating": 0,
+            "comment": null
+        },
+        {
+            "id": 15270,
+            "userId": 12,
+            "itemId": 47,
+            "quantity": 1,
+            "dateTime": "26/09/2023 11:47 AM",
+            "status": "pending",
+            "amount": 34,
+            "deviceId": "RMX1971199fbdfe2c572a9c",
+            "name": "Shrikant Jaiswal",
+            "nameHindi": "श्रीकांत जायसवाल",
+            "itemName": "Dal-Rice full plate",
+            "itemPrice": 34,
+            "itemNameHindi": "दाल-चावल फुल प्लेट",
+            "rating": 0,
+            "comment": null
+        }
+    ]
+}

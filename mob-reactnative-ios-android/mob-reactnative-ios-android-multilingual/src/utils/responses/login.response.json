@@ -1,0 +1,18 @@
+{
+    "userId": 1,
+    "name": "SnaxGenie Canteen",
+    "password": "a1b2c3d4",
+    "userType": "vendor",
+    "company": "GenesisSnap",
+    "deviceId": "a1b2c3d4",
+    "email": "canteen@genesistechnologies.in",
+    "notificationToken": "",
+    "status": "active",
+    "nameHindi": null,
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhMWIyYzNkNCIsInVzZXJJZCI6IjEiLCJyb2xlIjoidmVuZG9yIn0.wTlys0QXVAj_sQ2fZAY2PejpKtH6SuP9Z0kaxd-IsS96yGrIyXHHnhjucrNBX-nIZpieL8q4VJGsdFBhtaUL1Q",
+    "message": "Login successful",
+    "walletAmount": 0,
+    "credit": 0,
+    "debit": 0,
+    "oldPassword": null
+}

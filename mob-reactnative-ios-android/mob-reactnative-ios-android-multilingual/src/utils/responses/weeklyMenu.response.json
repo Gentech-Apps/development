@@ -1,0 +1,66 @@
+{
+    "weeklyMenu": [
+        {
+            "dayHindi": "सोमवार",
+            "dayId": 7,
+            "subType": [
+                {
+                    "weeklyMenuId": 64,
+                    "dayId": 7,
+                    "breakfast": "Poha",
+                    "lunch": "Alu Pyaj",
+                    "eveningSnack": "Idli",
+                    "dinner": "Paneer",
+                    "breakfastHindi": "पोहा",
+                    "lunchHindi": "अलु पायज",
+                    "eveningSnackHindi": "इडली",
+                    "dinnerHindi": "पनीर",
+                    "message": null,
+                    "status": "Current week",
+                    "day": null
+                }
+            ],
+            "day": "Monday"
+        },
+        {
+            "dayHindi": "मंगलवार",
+            "dayId": 8,
+            "subType": [
+                null
+            ],
+            "day": "Tuesday"
+        },
+        {
+            "dayHindi": "बुधवार",
+            "dayId": 9,
+            "subType": [
+                null
+            ],
+            "day": "Wednesday"
+        },
+        {
+            "dayHindi": "गुरूवार",
+            "dayId": 10,
+            "subType": [
+                null
+            ],
+            "day": "Thrusday"
+        },
+        {
+            "dayHindi": "शुक्रवार",
+            "dayId": 11,
+            "subType": [
+                null
+            ],
+            "day": "Friday"
+        },
+        {
+            "dayHindi": "शनिवार",
+            "dayId": 12,
+            "subType": [
+                null
+            ],
+            "day": "Saturday"
+        }
+    ]
+}
