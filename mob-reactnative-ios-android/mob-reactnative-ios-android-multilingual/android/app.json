@@ -1,0 +1,6 @@
+{
+  "name": "snaxgenie",
+  "displayName": "snaxgenie",
+  "API_URL_LOCAL": "http://192.168.0.101:8092/canteenApp",
+  "API_URL": "http://192.168.0.101:8092/canteenApp/api"
+}
