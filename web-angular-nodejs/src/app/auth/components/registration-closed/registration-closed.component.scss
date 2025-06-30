@@ -1,0 +1,39 @@
+.registration-closed-main-container {
+  text-align: center;
+  overflow: auto;
+  max-height: 100vh;
+  .registration-closed-image {
+    width: 45vw;
+    height: 75vh;
+  }
+
+  .registration-closed-message {
+    width: 100%;
+    font-size: 35px;
+    font-weight: 500;
+  }
+}
+
+@media only screen and (min-width: 1160px) and (max-width: 1278px) {
+  .registration-closed-main-container {
+    .registration-closed-message {
+      font-size: 31px;
+    }
+  }
+}
+
+@media only screen and (min-width: 1023px) and (max-width: 1159px) {
+  .registration-closed-main-container {
+    .registration-closed-message {
+      font-size: 29px;
+    }
+  }
+}
+
+@media only screen and (min-width: 852px) and (max-width: 1022px) {
+  .registration-closed-main-container {
+    .registration-closed-message {
+      font-size: 24px;
+    }
+  }
+}

@@ -1,0 +1,75 @@
+<ng-container>
+  <div class="feedback-main-container" [ngClass]="{ 'pointer-event-none': showLoader }">
+    <div class="d-flex feedback-form-header">
+      <h5 class="text-white">{{ data.title }}</h5>
+    </div>
+    <mat-progress-spinner
+      class="loader"
+      [color]="color"
+      [mode]="mode"
+      *ngIf="showLoader"
+    ></mat-progress-spinner>
+
+    <div class="feedback-form-body">
+      <mat-progress-spinner
+        class="loader"
+        [color]="color"
+        [mode]="mode"
+        *ngIf="showLoader"
+      ></mat-progress-spinner>
+      <form class="feedback-form" [formGroup]="feedbackFormGroup">
+        <div class="feedback-field" [ngClass]="{ 'top-margin': isFinalOffer }">
+          <div class="editor d-flex flex-column rounded-bottom">
+            <quill-editor
+              [formControlName]="formControlVariables.feedback"
+              class="content-editor d-flex flex-column w-100"
+              [placeholder]="''"
+              [modules]="toolbarConfig"
+              [(ngModel)]="htmlContent"
+              (onEditorChanged)="changedEditor($event)"
+            ></quill-editor>
+            <mat-error
+              class="error py-1 px-2"
+              *ngIf="
+                feedbackFormGroup.controls[formControlVariables.feedback].touched &&
+                feedbackFormGroup.controls[formControlVariables.feedback].hasError('required')
+              "
+              >*This field is required.</mat-error
+            >
+          </div>
+        </div>
+      </form>
+    </div>
+    <mat-divider></mat-divider>
+    <div
+      class="feedback-confirmation text-red px-4 py-2 text-center fs-6"
+      *ngIf="feedbackFormGroup.valid && showConfirmationMessage"
+    >
+      Are you sure you want to submit the feedback?
+    </div>
+    <div class="feedback-form-footer d-flex justify-content-center gap-4 px-4 py-3">
+      <button
+        mat-raised-button
+        class="button-red py-2 px-3 d-flex align-items-center justify-content-center"
+        (click)="closeDialog()"
+      >
+        Close
+      </button>
+      <button
+        type="button"
+        mat-raised-button
+        class="button-green"
+        [disabled]="disableSubmitButton()"
+        [ngClass]="{ 'show-disabled': disableSubmitButton() }"
+        (click)="submitFeedback()"
+      >
+        {{
+          feedbackFormGroup.valid && showConfirmationMessage
+            ? 'Yes, Submit'
+            : 'Add
+                Feedback'
+        }}
+      </button>
+    </div>
+  </div>
+</ng-container>

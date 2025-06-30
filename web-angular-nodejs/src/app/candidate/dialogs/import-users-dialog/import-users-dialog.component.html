@@ -1,0 +1,248 @@
+<ng-container>
+  <mat-progress-spinner
+    class="loader"
+    [color]="color"
+    [mode]="mode"
+    *ngIf="loader"
+  ></mat-progress-spinner>
+  <div>
+    <div class="import-users-header background-green">
+      <h5 class="import-users-heading">Import Users</h5>
+    </div>
+    <div class="import-users-middle">
+      <div *ngIf="!showPopupMessage">
+        <form [formGroup]="importUsersForm">
+          <div>
+            <div class="import-users-field global-mat-class">
+              <mat-form-field appearance="outline">
+                <mat-label>Select Drive</mat-label>
+                <mat-select
+                  placeholder="Select Drive"
+                  formControlName="driveId"
+                  (selectionChange)="onChangeDrive($event)"
+                  data-id="select-drive-dropdown"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option
+                      *ngFor="let drive of driveList"
+                      [value]="drive.id"
+                      attr.data-id="{{ drive.name }}"
+                    >
+                      {{ drive.name }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+                <mat-error data-id="select-drive-error">*This field is required</mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="import-users-field global-mat-class pt-1">
+              <mat-form-field appearance="outline">
+                <button mat-icon-button matSuffix (click)="file_input.click()">
+                  <mat-icon data-id="attach-file-icon">attach_file</mat-icon>
+                </button>
+                <input
+                  type="text"
+                  placeholder="Choose XLSX File"
+                  readonly
+                  matInput
+                  formControlName="importFile"
+                  (click)="file_input.click()"
+                  style="cursor: pointer"
+                />
+                <input
+                  type="file"
+                  multiple
+                  hidden
+                  #file_input
+                  accept=".xlsx"
+                  (click)="file_input.value = ''"
+                  (change)="onSelectFile(file_input.files)"
+                />
+                <mat-error *ngIf="hasError('importFile', 'required')" data-id="attach-file-error"
+                  >*This field is required</mat-error
+                >
+                <mat-error
+                  *ngIf="hasError('importFile', 'invalidType')"
+                  data-id="attach-file-invalid-type-error"
+                  >*Please upload a xlxs file</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div class="import-users-field-checkbox">
+              <mat-checkbox formControlName="physical" data-id="physical-checkbox"
+                >Physical</mat-checkbox
+              >
+              <mat-checkbox formControlName="skipDuplicate" data-id="skip-duplicate-checkbox"
+                >Skip Duplicate</mat-checkbox
+              >
+            </div>
+          </div>
+        </form>
+        <div class="import-users-footer">
+          <button
+            mat-button
+            class="btn2 btn-sm button-green white"
+            (click)="importUsers()"
+            [disabled]="disableButton"
+            data-id="preview-button"
+          >
+            Preview
+          </button>
+        </div>
+      </div>
+      <div *ngIf="showPopupMessage" class="import-message">
+        <h4>Import completed</h4>
+        <h5>
+          Number of users imported successfully - {{ importedUserCount.split(' ')[0] }}<br />Number
+          of unsuccessful imports - {{ importedUserCount.split(' ')[1] }}
+        </h5>
+        <div class="show-duplicate-users">
+          <mat-divider class="divider"></mat-divider>
+          <div class="preview-table correct">
+            <div class="show-duplicate-table" *ngIf="dataSource.data.length > 0">
+              <h4 data-id="duplicate-records-text">Duplicate Records</h4>
+            </div>
+            <div class="table-container preview-table-data" *ngIf="dataSource.data.length > 0">
+              <table
+                mat-table
+                sticky
+                [dataSource]="dataSource"
+                class="mat-elevation-z8 table-container"
+              >
+                <ng-container matColumnDef="checkbox">
+                  <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox
+                      (change)="$event ? selectAll() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()"
+                      class="gray-checkbox-border"
+                      data-id="select-all-checkbox"
+                    >
+                    </mat-checkbox>
+                  </th>
+                  <td mat-cell *matCellDef="let element" class="align-checkbox-center">
+                    <mat-checkbox
+                      (change)="
+                        addOrRemoveFromCheckedList($event, dataSource.filteredData.indexOf(element))
+                      "
+                      [checked]="selection.isSelected(element)"
+                      data-id="select-checkbox"
+                    >
+                    </mat-checkbox>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="firstName">
+                  <th mat-header-cell *matHeaderCellDef>First Name</th>
+                  <td mat-cell *matCellDef="let element" attr.data-id="{{ element.firstName }}">
+                    {{ element.firstName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="lastName">
+                  <th mat-header-cell *matHeaderCellDef>Last Name</th>
+                  <td mat-cell *matCellDef="let element" attr.data-id="{{ element.lastName }}">
+                    {{ element.lastName }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mobileNumber">
+                  <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    [title]="
+                      element?.status?.includes('Mobile Number already exists')
+                        ? 'Mobile Number already exists'
+                        : ''
+                    "
+                    [ngClass]="
+                      element?.status?.includes('Mobile Number already exists')
+                        ? 'duplicate-data'
+                        : ''
+                    "
+                    attr.data-id="{{ element.mobileNumber }}"
+                  >
+                    {{ element.mobileNumber }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    [title]="
+                      element?.status?.includes('Email already exists')
+                        ? 'Email already exists'
+                        : ''
+                    "
+                    [ngClass]="
+                      element?.status?.includes('Email already exists') ? 'duplicate-data' : ''
+                    "
+                    attr.data-id="{{ element.email }}"
+                  >
+                    {{ element.email }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="areaOfInterest">
+                  <th mat-header-cell *matHeaderCellDef>Area Of Interest</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    attr.data-id="{{ element.areaOfinterest }}"
+                  >
+                    {{ element.areaOfinterest }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="examDate">
+                  <th mat-header-cell *matHeaderCellDef>Exam Date</th>
+                  <td
+                    mat-cell
+                    *matCellDef="let element"
+                    attr.data-id="{{ element.examDate | date: 'dd/MM/yyyy' }}"
+                  >
+                    {{ element.examDate | date: 'dd/MM/yyyy' }}
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="examTime">
+                  <th mat-header-cell *matHeaderCellDef>Exam Time</th>
+                  <td mat-cell *matCellDef="let element" attr.data-id="{{ element.examTime }}">
+                    {{ element.examTime }}
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+              </table>
+            </div>
+            <div class="preview-footer">
+              <button
+                mat-raised-button
+                class="cacle-btn"
+                [mat-dialog-close]="true"
+                data-id="close-button"
+              >
+                Close
+              </button>
+              <button
+                mat-raised-button
+                *ngIf="dataSource.data.length > 0"
+                class="button-green"
+                (click)="importDuplicateUsers()"
+                [disabled]="selectedIndexList.length == 0"
+                [ngClass]="{ 'show-disabled': selectedIndexList.length == 0 }"
+                data-id="import-duplicate-button"
+              >
+                Import Duplicate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

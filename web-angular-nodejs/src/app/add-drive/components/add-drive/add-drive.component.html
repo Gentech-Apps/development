@@ -1,0 +1,1153 @@
+<div class="row add-drive-header">
+  <div class="add-drive-logo">
+    <img src="../../../../assets/images/Logo.png" alt="SnaxGenie" class="img-fluid" />
+  </div>
+
+  <div class="add-drive-menuitems" attr.data-id="{{ header }}">
+    <h3>
+      <B>{{ header }}</B>
+    </h3>
+  </div>
+
+  <div class="column logout-logo">
+    <mat-icon
+      role="img"
+      class="mat-icon notranslate text-black material-icons mat-ligature-font mat-icon-no-color"
+      aria-hidden="true"
+      data-mat-icon-type="font"
+      matTooltip="Logout"
+      (click)="logout()"
+      data-id="logout-button"
+      >logout</mat-icon
+    >
+  </div>
+</div>
+<mat-progress-spinner
+  class="loader"
+  [color]="loaderConfig.color"
+  [mode]="loaderConfig.mode"
+  *ngIf="loader"
+></mat-progress-spinner>
+<mat-stepper
+  linear
+  #stepper
+  class="global-radio-and-checkbox-size-class"
+  [ngClass]="{ 'pointer-events-none': loader }"
+>
+  <ng-template matStepperIcon="edit" let-index="index"> {{ index + 1 }} </ng-template>
+  <ng-template matStepperIcon="done" let-index="index"> {{ index + 1 }} </ng-template>
+  <mat-step [stepControl]="addDriveFormGroup" [editable]="isEditable">
+    <div class="add-drive-main">
+      <div class="add-drive-sub">
+        <form [formGroup]="addDriveFormGroup">
+          <div class="add-drive-form global-mat-class">
+            <ng-template matStepLabel>Add Drive</ng-template>
+            <div class="add-drive-field add-drive-form-view">
+              <div class="add-drive-field-sub">
+                <div class="drive-name col-md-12">
+                  <label class="col-md-4">Drive Name: </label>
+                  <mat-form-field class="drive-name-input col-md-8" appearance="outline">
+                    <mat-label>Drive Name</mat-label>
+                    <input
+                      matInput
+                      [formControlName]="formControlVariables.driveName"
+                      (keydown.tab)="(false)"
+                      data-id="drive-name-field"
+                    />
+                    <mat-error data-id="drive-name-error">*Please enter a valid name</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="add-drive-field-sub">
+                <div class="col-md-12 add-drive-field add-drive-form-view">
+                  <label class="col-md-4">Agora Status :</label>
+                  <div class="col-md-8">
+                    <mat-radio-group [formControlName]="formControlVariables.agoraStatus">
+                      <mat-radio-button
+                        value="Unrestricted"
+                        [disabled]="disableAgoraStatus"
+                        data-id="agora-off-radio"
+                        >Off</mat-radio-button
+                      >
+                      <mat-radio-button
+                        class="ml-10"
+                        value="Restricted"
+                        [disabled]="disableAgoraStatus"
+                        [checked]="true"
+                        data-id="agora-on-radio"
+                        >On</mat-radio-button
+                      >
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="add-drive-field add-drive-form-view">
+              <div class="add-drive-field-sub">
+                <div class="col-md-12 add-drive-field add-drive-form-view">
+                  <label class="col-md-4">Registration Type :</label>
+                  <div class="col-md-8">
+                    <mat-radio-group
+                      aria-label="Select an option"
+                      (change)="selectRegistrationType($event)"
+                    >
+                      <mat-radio-button
+                        value="1"
+                        [checked]="true"
+                        data-id="registration-global-radio"
+                        >Global</mat-radio-button
+                      >
+                      <mat-radio-button class="ml-30" value="2" data-id="registration-ip-radio"
+                        >IP</mat-radio-button
+                      >
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+              <div class="add-drive-field-sub" *ngIf="showTimeSlot && !showDatePicker">
+                <div class="col-md-12 add-drive-field">
+                  <label class="col-md-4">Time Slot :</label>
+                  <mat-form-field class="col-md-8 select-drive-time-slot" appearance="outline">
+                    <mat-label>Select Time Slot</mat-label>
+                    <mat-select
+                      multiple
+                      [formControlName]="formControlVariables.timeSlot"
+                      #matSelect
+                      [matTooltip]="matSelect.triggerValue"
+                      data-id="timeslot-dropdown"
+                    >
+                      <mat-option
+                        *ngFor="let t of timeSlots"
+                        [value]="t.id"
+                        attr.data-id="{{ t.timeSlot | ToTwelveHoursBase }}"
+                        >{{ t.timeSlot | ToTwelveHoursBase }}</mat-option
+                      >
+                    </mat-select>
+                    <mat-error data-id="timeslot-dropdown-error"
+                      >*Please select time slot.</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="add-drive-field-sub" *ngIf="visibleRegIP">
+                <div class="col-md-12 add-drive-field">
+                  <label class="col-md-4">Registration IP :</label>
+                  <mat-form-field class="col-md-8" appearance="outline">
+                    <mat-label>Registration IP</mat-label>
+                    <input
+                      matInput
+                      [formControlName]="formControlVariables.registrationIP"
+                      (keyup)="
+                        this.loginType == 'IP' && this.registrationType == 'IP'
+                          ? updateInputData()
+                          : ''
+                      "
+                      (blur)="validateIP('registrationIP')"
+                      data-id="registration-ip-field"
+                    />
+                    <mat-error
+                      *ngIf="hasError(formControlVariables.registrationIP, 'required')"
+                      data-id="registration-ip-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError(formControlVariables.registrationIP, 'pattern')"
+                      data-id="registration-ip-pattern-error"
+                      >*Please enter a valid IP address</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="add-drive-field add-drive-form-view">
+              <div class="add-drive-field-sub">
+                <div class="col-md-12 add-drive-field add-drive-form-view">
+                  <label class="col-md-4">Login Type :</label>
+                  <div>
+                    <mat-radio-group
+                      class="col-md-8"
+                      aria-label="Select an option"
+                      (change)="selectLoginType($event)"
+                    >
+                      <mat-radio-button value="1" [checked]="true" data-id="login-global-radio"
+                        >Global</mat-radio-button
+                      >
+                      <mat-radio-button value="2" class="ml-30" data-id="login-ip-radio"
+                        >IP</mat-radio-button
+                      >
+                    </mat-radio-group>
+                    <div
+                      class="text-danger ml-10"
+                      *ngIf="invalidLoginType"
+                      data-id="invalid-selection-error"
+                    >
+                      *Invalid selection
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="add-drive-field-sub">
+                <div *ngIf="visibleLoginIP" class="col-md-12 add-drive-field">
+                  <label class="col-md-4">Login IP :</label>
+                  <mat-form-field
+                    class="col-md-8"
+                    appearance="outline"
+                    [ngClass]="
+                      this.loginType == 'IP' && this.registrationType == 'IP' ? 'pointer-event' : ''
+                    "
+                    placeholder="Enter login IP here"
+                  >
+                    <mat-label>Login IP</mat-label>
+                    <input
+                      matInput
+                      formControlName="loginIP"
+                      (blur)="validateIP('loginIP')"
+                      data-id="login-ip-field"
+                    />
+                    <mat-error *ngIf="hasError('loginIP', 'required')" data-id="login-ip-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('loginIP', 'pattern')"
+                      data-id="login-ip-pattern-error"
+                      >*Please enter a valid IP address</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div class="add-drive-field add-drive-form-view">
+              <div class="add-drive-field-sub">
+                <div class="col-md-12 add-drive-field add-drive-form-view">
+                  <label class="col-md-4">Drive Type :</label>
+                  <div class="col-md-8">
+                    <mat-radio-group
+                      aria-label="Select an option"
+                      (change)="selectDateType($event)"
+                    >
+                      <mat-radio-button value="custom" data-id="drive-date-admin-radio"
+                        >Admin</mat-radio-button
+                      >
+                      <mat-radio-button
+                        class="ml-30"
+                        value="userDefined"
+                        [checked]="true"
+                        data-id="drive-date-user-defined-radio"
+                        >User Defined</mat-radio-button
+                      >
+                    </mat-radio-group>
+                  </div>
+                </div>
+              </div>
+              <div class="add-drive-field-sub">
+                <div *ngIf="showDatePicker" class="col-md-12 add-drive-field add-drive-form-view">
+                  <label class="col-md-4">Enter date :</label>
+                  <mat-form-field class="col-md-8 remove-datepicker-ripple" appearance="outline">
+                    <mat-label>Drive Date </mat-label>
+                    <input
+                      matInput
+                      [matDatepicker]="picker"
+                      [min]="minDate"
+                      readonly
+                      formControlName="driveDate"
+                      (dateInput)="onSelectDriveDate($event)"
+                    />
+                    <mat-datepicker-toggle
+                      matIconSuffix
+                      [for]="picker"
+                      data-id="drive-date-picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error data-id="invalid-date-error">*Please enter a valid date</mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="showDatePicker" class="add-drive-field add-drive-form-view drive-time">
+              <label>Set Drive Time : </label>
+
+              <div class="add-drive-field-sub drive-time-field">
+                <div class="time-select-lable"><label>Start Time* :</label></div>
+                <div>
+                  <div class="col-md-12 add-drive-field remove-padding">
+                    <timepicker
+                      formControlName="driveStartTime"
+                      (focusout)="onDriveTimeFocusOut()"
+                      (mousemove)="onDriveTimeMouseMove()"
+                      data-id="start-time-field"
+                    >
+                    </timepicker>
+                  </div>
+                  <div>
+                    <mat-error
+                      class="time-mat-error"
+                      *ngIf="
+                        addDriveFormGroup.controls['driveStartTime'].touched &&
+                        addDriveFormGroup.controls['driveStartTime'].hasError('required')
+                      "
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      class="time-mat-error"
+                      *ngIf="addDriveFormGroup.controls['driveStartTime'].hasError('incorrect')"
+                      >*start time should be less than end time</mat-error
+                    >
+                    <mat-error
+                      class="time-mat-error"
+                      *ngIf="addDriveFormGroup.controls['driveStartTime'].hasError('current')"
+                      >*start time should be greater than current time</mat-error
+                    >
+                  </div>
+                </div>
+
+                <div class="time-select-lable"><label>End Time* : </label></div>
+                <div>
+                  <div class="col-md-12 add-drive-field remove-padding">
+                    <timepicker
+                      (focusout)="onDriveTimeFocusOut()"
+                      (mousemove)="onDriveTimeMouseMove()"
+                      name="selected_time_A"
+                      formControlName="driveEndTime"
+                      data-id="end-time-field"
+                    ></timepicker>
+                  </div>
+                  <div>
+                    <mat-error
+                      class="time-mat-error"
+                      *ngIf="
+                        addDriveFormGroup.controls['driveEndTime'].touched &&
+                        addDriveFormGroup.controls['driveEndTime'].hasError('required')
+                      "
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      class="time-mat-error"
+                      *ngIf="addDriveFormGroup.controls['driveEndTime'].hasError('incorrect')"
+                      >*end time should be greater than start time</mat-error
+                    >
+                    <mat-error
+                      class="time-mat-error"
+                      *ngIf="addDriveFormGroup.controls['driveEndTime'].hasError('current')"
+                      >*end time should be greater than current time</mat-error
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="add-drive-field add-drive-form-view">
+            <div class="add-drive-field-sub">
+              <div class="col-md-12">
+                <mat-checkbox
+                  (change)="setEligibilityCriteria($event)"
+                  data-id="eligibility-criteria-checkbox"
+                  >In Eligible Criteria</mat-checkbox
+                >
+              </div>
+            </div>
+            <div class="add-drive-field-sub">
+              <div
+                class="eligibility-criteria-input-container global-mat-class"
+                *ngIf="showCriteriaField"
+              >
+                <div class="input-label">
+                  <label>Appeared For Test After :</label>
+                </div>
+                <mat-form-field *ngIf="showCriteriaField" appearance="outline">
+                  <mat-label data-id="appeared-for-test-after-field"
+                    >Enter Number of Days</mat-label
+                  >
+                  <input matInput formControlName="criteria" />
+                  <mat-error *ngIf="hasError('criteria', 'required')" data-id="criteria-error"
+                    >*This field is required.</mat-error
+                  >
+                  <mat-error
+                    *ngIf="hasError('criteria', 'pattern')"
+                    data-id="criteria-pattern-error"
+                    >*Please enter a valid criteria.</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="add-drive-field add-drive-form-view waiting-time-div">
+            <div class="add-drive-field-sub">
+              <div class="global-mat-class waiting-time-field">
+                <label>Paper List Page: </label>
+                <mat-form-field appearance="outline">
+                  <mat-label data-id="paper-list-page-timer-field">Time in minutes</mat-label>
+                  <input
+                    matInput
+                    formControlName="waitingTimeForPaperListPage"
+                    (keydown.tab)="(false)"
+                    type="number"
+                  />
+                  <mat-error
+                    *ngIf="hasError('waitingTimeForPaperListPage', 'required')"
+                    data-id="paper-list-page-timer-error"
+                    >*This field is required.</mat-error
+                  >
+                  <mat-error
+                    *ngIf="hasError('waitingTimeForPaperListPage', 'pattern')"
+                    data-id="paper-list-page-timer-pattern-error"
+                    >*Please enter a valid time</mat-error
+                  >
+                  <mat-error *ngIf="hasError('waitingTimeForPaperListPage', 'max')"
+                    >*Waiting time cannot be greater than 5 minutes.</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="add-drive-field-sub">
+              <div class="global-mat-class waiting-time-field">
+                <label>Instructions Page: </label>
+                <mat-form-field appearance="outline">
+                  <mat-label data-id="instruction-page-timer-field">Time in minutes</mat-label>
+                  <input
+                    matInput
+                    formControlName="waitingTimeForInstructionsPage"
+                    (keydown.tab)="(false)"
+                    type="number"
+                  />
+                  <mat-error
+                    *ngIf="hasError('waitingTimeForInstructionsPage', 'required')"
+                    data-id="instruction-page-timer-error"
+                    >*This field is required.</mat-error
+                  >
+                  <mat-error
+                    *ngIf="hasError('waitingTimeForInstructionsPage', 'pattern')"
+                    data-id="instruction-page-timer-pattern-error"
+                    >*Please enter a valid time</mat-error
+                  >
+                  <mat-error *ngIf="hasError('waitingTimeForInstructionsPage', 'max')"
+                    >*Waiting time cannot be greater than 5 minutes.</mat-error
+                  >
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <button
+              class="button btn-position float-right next-button-color"
+              (click)="addDrive(stepper)"
+              [disabled]="disableButton"
+              mat-button
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step [stepControl]="addFormFieldsFormGroup" [editable]="isEditable">
+    <div class="add-fields-main">
+      <div class="add-fields-sub">
+        <form [formGroup]="addFormFieldsFormGroup">
+          <div class="add-drive-form add-form-field-div">
+            <ng-template matStepLabel>Add form fields</ng-template>
+            <div class="add-drive-form-view add-form-fields">
+              <div class="form-filed-container">
+                <div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'firstName')"
+                      formControlName="firstName"
+                      data-id="firstname-checkbox"
+                      >First Name</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'lastName')"
+                      formControlName="lastName"
+                      data-id="lastname-checkbox"
+                      >Last Name</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'email')"
+                      formControlName="email"
+                      data-id="email-checkbox"
+                      >Email</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'contact')"
+                      formControlName="contact"
+                      data-id="contact-number-checkbox"
+                      >Contact Number</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'areaOfInterest')"
+                      formControlName="areaOfInterest"
+                      data-id="aoi-checkbox"
+                      >Area Of Interest</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'date')"
+                      formControlName="date"
+                      data-id="exam-date-checkbox"
+                      >Exam Date</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      (change)="onRequiredFieldChange($event, 'time')"
+                      formControlName="time"
+                      data-id="exam-time-checkbox"
+                      >Exam Time</mat-checkbox
+                    >
+                  </div>
+                </div>
+                <div>
+                  <div>
+                    <mat-checkbox
+                      class="remove-ripple"
+                      formControlName="profile"
+                      data-id="profile-checkbox"
+                      >Profile Photo</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      class="remove-ripple"
+                      formControlName="resume"
+                      data-id="resume-checkbox"
+                      >Resume</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      class="remove-ripple"
+                      formControlName="qualification"
+                      data-id="qualification-checkbox"
+                      >Qualification</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      class="remove-ripple"
+                      formControlName="whatsappNumber"
+                      data-id="whatsApp-number-checkbox"
+                      >WhatsApp Number</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      class="remove-ripple"
+                      formControlName="location"
+                      data-id="location-checkbox"
+                      >Location</mat-checkbox
+                    >
+                  </div>
+                  <div>
+                    <mat-checkbox
+                      class="remove-ripple"
+                      formControlName="source"
+                      data-id="source-checkbox"
+                      >Source</mat-checkbox
+                    >
+                  </div>
+                </div>
+              </div>
+              <div
+                *ngIf="addFormFieldsFormGroup.controls['qualification'].value"
+                class="global-mat-class qualification-container"
+              >
+                <mat-form-field appearance="outline" class="mat-select-for-qualification">
+                  <mat-label data-id="qualification-dropdown">Qualification</mat-label>
+                  <mat-select
+                    (selectionChange)="selectQualification($event)"
+                    multiple
+                    placeholder="Select Qualification"
+                    #matSelect
+                    [matTooltip]="matSelect.triggerValue"
+                  >
+                    <div class="mat-option-checked">
+                      <mat-option
+                        *ngFor="let column of qualificationList"
+                        [value]="column"
+                        attr.data-id="{{ column.name }}"
+                        >{{ column.name }}</mat-option
+                      >
+                    </div>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="button-div">
+              <button
+                class="btn-position button next-button-color float-right"
+                (click)="addFormFields(stepper)"
+                [disabled]="disableButton"
+                mat-button
+                data-id="form-field-add"
+              >
+                Add
+              </button>
+              <button
+                class="btn-position button margin-right-form-field back-button-color float-left"
+                (click)="goToPreviousStep(stepper, 'addDrive')"
+                mat-button
+                data-id="form-field-back"
+              >
+                Back
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step [editable]="isEditable">
+    <div class="email-templates-main">
+      <div>
+        <div class="add-template-form">
+          <ng-template matStepLabel>Add Email Template</ng-template>
+          <div class="select-group global-mat-class" *ngIf="emailGroupList.length > 0">
+            <form [formGroup]="selectEmailTemplateFormGroup" class="d-flex justify-content-end">
+              <mat-form-field appearance="outline" class="">
+                <mat-select
+                  placeholder="select group"
+                  (selectionChange)="onSelectEmailGroup($event.value)"
+                  formControlName="selectedEmailTemplate"
+                  data-id="email-template-group-dropdown"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option
+                      *ngFor="let group of emailGroupList"
+                      [value]="group.id"
+                      attr.data-id="{{ group.name }}"
+                    >
+                      {{ group.name }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="email-template-list-div">
+            <div *ngFor="let template of emailTemplateList" class="email-templates-sub">
+              <div class="email-templates-sub-2" data-id="{{ template.name }}">
+                {{ template.name }}
+              </div>
+              <div class="email-templates-sub-3">
+                <button
+                  class="button button-green email-template-buttons"
+                  (click)="addSubject(template)"
+                  mat-button
+                  data-id="template-subject"
+                >
+                  Subject
+                </button>
+                <button
+                  *ngIf="!template.isEdit"
+                  class="button button-green email-template-buttons"
+                  (click)="addTemplateModal(template.id, 'add')"
+                  mat-button
+                  data-id="template-add"
+                >
+                  Add
+                </button>
+                <button
+                  *ngIf="template.isEdit"
+                  class="button button-green email-template-buttons"
+                  (click)="openDefaultEmailTemplateView(template.id)"
+                  mat-button
+                  data-id="template-preview"
+                >
+                  Preview
+                </button>
+                <button
+                  *ngIf="template.isEdit"
+                  class="button button-green email-template-buttons"
+                  (click)="addTemplateModal(template.id, 'edit')"
+                  mat-button
+                  data-id="template-edit"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="footer-div">
+            <button
+              [disabled]="disableAddEmailTemplateButton"
+              *ngIf="showSaveNextEmail"
+              class="btn-position float-right next-button-color"
+              (click)="saveTemplates(stepper, 'saveNext')"
+              mat-button
+              data-id="template-save-next"
+            >
+              Save & Next
+            </button>
+            <button
+              [disabled]="disableAddEmailTemplateButton"
+              *ngIf="!showSaveNextEmail"
+              class="btn-position float-right next-button-color"
+              (click)="saveTemplates(stepper, 'save')"
+              mat-button
+              data-id="template-save"
+            >
+              Save
+            </button>
+            <button
+              class="button btn-position back-button-color float-left"
+              (click)="goToPreviousStep(stepper, 'addFormFields')"
+              mat-button
+              data-id="template-back"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step [editable]="isEditable">
+    <div class="message-templates-main">
+      <div>
+        <div class="add-template-form">
+          <ng-template matStepLabel>Add Screen Messages</ng-template>
+          <div class="select-group global-mat-class" *ngIf="messageGroupList.length > 0">
+            <form [formGroup]="selectMessageTemplateFormGroup" class="d-flex justify-content-end">
+              <mat-form-field appearance="outline" class="">
+                <mat-select
+                  placeholder="select group"
+                  (selectionChange)="onSelectMessageGroup($event.value)"
+                  formControlName="selectedMessageTemplate"
+                  data-id="screen-message-group-dropdown"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option
+                      *ngFor="let group of messageGroupList"
+                      [value]="group.id"
+                      attr.data-id="{{ group.name }}"
+                    >
+                      {{ group.name }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="email-template-list-div">
+            <div *ngFor="let template of messageTemplateList" class="message-templates-sub">
+              <div class="message-templates-sub-4" attr.data-id="{{ template.name }}">
+                {{ template.name }}
+              </div>
+              <div class="message-templates-sub-5">
+                <button
+                  *ngIf="!template.isEdit"
+                  class="button button-green email-template-buttons"
+                  (click)="addMessageTemplateModal(template.id, 'add')"
+                  mat-button
+                  data-id="template-add"
+                >
+                  Add
+                </button>
+                <button
+                  *ngIf="template.isEdit"
+                  class="button button-green email-template-buttons"
+                  (click)="previewMessageTemplate(template)"
+                  mat-button
+                  data-id="template-preview"
+                >
+                  Preview
+                </button>
+                <button
+                  *ngIf="template.isEdit"
+                  class="button button-green email-template-buttons"
+                  (click)="addMessageTemplateModal(template.id, 'edit')"
+                  mat-button
+                  data-id="template-edit"
+                >
+                  Edit
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="footer-div">
+            <button
+              [disabled]="disableAddScreenMessageButton"
+              *ngIf="showSaveNextMessage"
+              class="float-right next-button-color"
+              (click)="saveMessageTemplates(stepper, 'saveNext')"
+              mat-button
+              data-id="template-save-next"
+            >
+              Save & Next
+            </button>
+            <button
+              [disabled]="disableAddScreenMessageButton"
+              *ngIf="!showSaveNextMessage"
+              class="float-right next-button-color"
+              (click)="saveMessageTemplates(stepper, 'save')"
+              mat-button
+              data-id="template-save"
+            >
+              Save
+            </button>
+            <button
+              class="button back-button-color float-left"
+              (click)="goToPreviousStep(stepper, 'addEmailTemplates')"
+              mat-button
+              data-id="template-back"
+            >
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step [editable]="isEditable">
+    <div class="add-area-main global-mat-class">
+      <form [formGroup]="addAreaFormGroup">
+        <ng-template matStepLabel>Add AreaOfInterest</ng-template>
+        <div class="add-drive-form area-container">
+          <div class="add-drive-field add-drive-form-view area-input-container">
+            <label class="area-input-lable">Area Of Interest: </label>
+            <mat-form-field class="select-group-input" appearance="outline">
+              <mat-label>Select AOI</mat-label>
+              <mat-select
+                placeholder="Select AOI"
+                formControlName="areaOfInterest"
+                data-id="aoi-dropdown"
+                (selectionChange)="changeAreaOfInterest($event)"
+              >
+                <div class="mat-option-checked-tickmark">
+                  <mat-option
+                    *ngFor="let area of areaOfInterestList"
+                    [value]="area"
+                    attr.data-id="{{ area.name }}"
+                  >
+                    {{ area.name }}
+                  </mat-option>
+                </div>
+              </mat-select>
+              <mat-error data-id="aoi-field-error">*This field is required.</mat-error>
+            </mat-form-field>
+            <i
+              class="fas refresh-aoi-button faimg fa-2x fa-sync-alt cursor-pointer"
+              (click)="getPaperData(true)"
+              matTooltip="Refresh AOI list"
+            ></i>
+          </div>
+
+          <div
+            class="add-drive-field add-drive-form-view interview-stages-container"
+            *ngIf="showInterviewStages"
+          >
+            <label class="interview-stages-lable">Interview Stages: </label>
+            <div class="interview-stages-checkboxes">
+              <mat-checkbox
+                #stageCheckboxRef
+                class="stage-checkbox"
+                (change)="changeStageStatus($event)"
+                [value]="stage.id + ''"
+                [checked]="true || showInterviewStages"
+                *ngFor="let stage of interviewStages"
+                [disabled]="stage.name == finalOfferStage"
+                >{{ stage.name }}</mat-checkbox
+              >
+            </div>
+          </div>
+          <div class="justify-content-between d-flex">
+            <button
+              class="button back-button-color"
+              (click)="goToPreviousStep(stepper, 'addMessageTemplates')"
+              mat-button
+              data-id="aoi-back"
+            >
+              Back
+            </button>
+            <div class="d-flex gap-2">
+              <button
+                class="button next-button-color"
+                (click)="addAreaOfInterest()"
+                [disabled]="submitted"
+                mat-button
+                data-id="aoi-add"
+              >
+                Add AOI
+              </button>
+              <button
+                class="button next-button-color"
+                mat-button
+                (click)="stepToPaperCutOff(stepper)"
+                data-id="aoi-next"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="area-chips-div">
+      <div *ngFor="let area of areaListAddToDrive" class="global-mat-chip-class">
+        <mat-chip id="mat-chip" attr.data-id="{{ area.name }}">
+          {{ area.name }}
+          <mat-icon matChipRemove (click)="removeAreaOfInterest(area)" data-id="aoi-chip-remove"
+            >cancel</mat-icon
+          >
+        </mat-chip>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step [editable]="isEditable">
+    <div class="add-cutoff-conatiner">
+      <div class="add-paper-cutoff-main add-paper-cutoff-validation">
+        <form [formGroup]="addPaperCutOffFormGroup" #formDirective="ngForm">
+          <ng-template matStepLabel>Add paper cutoff</ng-template>
+          <div class="add-cuttoff-form">
+            <div class="input-container">
+              <label class="input-lable">Area Of Interest: </label>
+              <mat-form-field class="" appearance="outline">
+                <mat-select
+                  placeholder="Select AOI"
+                  [formControlName]="formControlVariables.areaOfInterest"
+                  (selectionChange)="loadPapers($event)"
+                  data-id="aoi-dropdown"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option
+                      *ngFor="let area of areaOfInterestListForPaperCutOff"
+                      [value]="area.id"
+                      attr.data-id="{{ area.name }}"
+                    >
+                      {{ area.name }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+                <mat-error data-id="aoi-field-error">*This field is required.</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="input-container">
+              <label class="input-lable">Paper: </label>
+              <mat-form-field class="" appearance="outline">
+                <mat-select
+                  placeholder="Select Paper"
+                  [formControlName]="formControlVariables.paper"
+                  data-id="paper-dropdown"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option
+                      *ngFor="let paper of paperList"
+                      [value]="paper.id"
+                      attr.data-id="{{ paper.name }}"
+                    >
+                      {{ paper.name }}
+                    </mat-option>
+                  </div>
+                </mat-select>
+                <mat-error data-id="paper-field-error">*This field is required.</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="add-cuttoff-form">
+            <div class="input-container">
+              <label class="input-lable">CutOff Marks: </label>
+              <mat-form-field appearance="outline">
+                <input
+                  matInput
+                  [formControlName]="formControlVariables.cutOffMarks"
+                  placeholder="Cut Off Marks"
+                  (input)="validate('cutOffMarks')"
+                  data-id="cutoff-marks-field"
+                />
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.cutOffMarks
+                    ].hasError('min')
+                  "
+                  data-id="cutoff-marks-error"
+                  >*Can't be less than auto cutoff marks.</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.cutOffMarks
+                    ].hasError('required')
+                  "
+                  data-id="cutoff-field-error"
+                  >*This field is required.</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.cutOffMarks
+                    ].hasError('pattern')
+                  "
+                  data-id="invalid-cutoff-error"
+                  >*please enter valid marks</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.cutOffMarks
+                    ].hasError('incorrect')
+                  "
+                  data-id="incorrect-cutoff-marks-error"
+                  >*Can't be less than auto cutoff marks.</mat-error
+                >
+              </mat-form-field>
+            </div>
+
+            <div class="input-container">
+              <label class="input-lable">Auto CutOff Marks: </label>
+              <mat-form-field class="" appearance="outline">
+                <input
+                  matInput
+                  [formControlName]="formControlVariables.autoCutOffMarks"
+                  placeholder="Auto CutOff Marks"
+                  (input)="validate('autoCutOffMarks')"
+                  (focusout)="isAutoCutOffFocusOut = true"
+                  (focus)="checkIsCutOffMarksIsEmpty()"
+                  data-id="auto-cutoff-marks-field"
+                />
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.autoCutOffMarks
+                    ].hasError('max')
+                  "
+                  data-id="auto-cutoff-marks-error"
+                  >*Can't be greater than cutoff marks.</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.autoCutOffMarks
+                    ].hasError('pattern')
+                  "
+                  data-id="invalid-auto-cutoff-error"
+                  >*please enter valid marks</mat-error
+                >
+                <mat-error
+                  *ngIf="
+                    this.addPaperCutOffFormGroup.controls[
+                      formControlVariables.autoCutOffMarks
+                    ].hasError('incorrect')
+                  "
+                  data-id="auto-cutoff-marks-error"
+                  >*Can't be greater than cutoff marks.</mat-error
+                >
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="d-flex justify-content-between add-cutoff-footer-buttons">
+            <button
+              class="button margin-right back-button-color float-left"
+              (click)="goToPreviousStep(stepper, 'addArea', formDirective)"
+              mat-button
+              data-id="cutoff-back"
+            >
+              Back
+            </button>
+            <div class="d-flex gap-2">
+              <button
+                class="button next-button-color float-left"
+                [disabled]="addPaperCutOffFormGroup.invalid"
+                [ngClass]="{ 'show-disabled': addPaperCutOffFormGroup.invalid }"
+                (click)="addPaperCutOff(formDirective); this.isEditable = false"
+                mat-button
+                data-id="cutoff-add"
+              >
+                Add Paper CutOff
+              </button>
+              <button
+                *ngIf="!enableSkipandNextButton"
+                class="button next-button-color float-right"
+                mat-button
+                matStepperNext
+                data-id="cutoff-next"
+              >
+                Next
+              </button>
+              <button
+                *ngIf="enableSkipandNextButton"
+                class="button next-button-color float-right"
+                (click)="skipToDone()"
+                mat-button
+                matStepperNext
+                data-id="cutoff-skip-next"
+              >
+                Skip & Next
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div class="paper-cutoff-chips-div">
+        <div *ngFor="let cutOff of cutOffListAddToDrive" class="global-mat-chip-class">
+          <mat-chip id="mat-chip" data-id="cutoff-chip">
+            {{ cutOff.areaOfInterestName }},{{ cutOff.paperName }},{{ cutOff.cutoffMarks }},{{
+              cutOff.autoCutOffMarks
+            }}
+            <mat-icon matChipRemove (click)="removePaperCutOff(cutOff)" data-id="cutoff-chip-remove"
+              >cancel</mat-icon
+            >
+          </mat-chip>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <div class="align-center">
+      <p data-id="you-are-now-done-text">You are now done.</p>
+      <div>
+        <button
+          class="button margin-right back-button-color"
+          (click)="goToPreviousStep(stepper, 'addPaperCutOff')"
+          mat-button
+          data-id="drive-back"
+        >
+          Back
+        </button>
+        <button
+          class="button margin-right next-button-color"
+          (click)="addDrivePreviewModal()"
+          mat-button
+          data-id="drive-preview"
+        >
+          Preview
+        </button>
+        <button
+          class="button margin-right next-button-color"
+          (click)="onFinalSubmit()"
+          [disabled]="submitted"
+          mat-button
+          data-id="drive-save"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </mat-step>
+</mat-stepper>

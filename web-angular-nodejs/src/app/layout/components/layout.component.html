@@ -1,0 +1,83 @@
+<ng-container *ngIf="!loader; else elseBlock">
+  <mat-toolbar class="mat-elevation-z8 mb-2 header">
+    <img src="../../assets/images/Logo.png" alt="Genesis Technologies" class="logo" />
+    <div class="fs-4 text-black heading-text">{{ headerTitle }}</div>
+    <div class="d-flex gap-3 me-2 user-menu">
+      <mat-icon
+        class="text-black"
+        (click)="openChangePasswordComponent()"
+        matTooltip="Change Password"
+        >lock</mat-icon
+      >
+      <mat-icon class="text-black" (click)="logoutPopUp()" matTooltip="LogOut">logout</mat-icon>
+    </div>
+  </mat-toolbar>
+  <mat-sidenav-container class="sidenave-container border-0" autosize>
+    <mat-sidenav #sidenav class="sidenav" mode="side" opened="true">
+      <mat-icon (click)="onOpenCloseSideBar()" class="menu">menu</mat-icon>
+      <mat-tree
+        [dataSource]="dataSource"
+        [treeControl]="treeControl"
+        (click)="handleMenuOpenClose()"
+      >
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <div
+            class="menu-text-div"
+            [ngClass]="!hasParent(node) ? 'sub-node' : 'ps-2'"
+            (click)="navigate(node.target, node.url)"
+            (click)="changeExpandedNode(node.name)"
+          >
+            <mat-icon
+              class="menu-button me-1 ms-1"
+              *ngIf="hasParent(node)"
+              [ngClass]="{ expanded: currentUrl.includes(node.url) }"
+              [matTooltip]="isExpanded ? '' : node.name"
+            >
+              {{ node.icon }}</mat-icon
+            >
+            <span
+              *ngIf="isExpanded"
+              class="cursor-pointer menu-text"
+              [ngClass]="{ active: currentUrl == node.url }"
+            >
+              {{ node.name }}</span
+            >
+          </div>
+        </mat-tree-node>
+        <mat-tree-node
+          *matTreeNodeDef="let node; when: hasChild"
+          matTreeNodePadding
+          (click)="expand(node)"
+          [ngClass]="{ expanded: currentUrl.includes(node.url) }"
+        >
+          <div class="d-flex align-items-end gap-1 ps-2">
+            <mat-icon
+              class="menu-button ms-1 me-1"
+              [ngClass]="{ expanded: currentUrl.includes(node.url) }"
+              [matTooltip]="isExpanded ? '' : node.name"
+              >{{ node.icon }}</mat-icon
+            >
+            <span *ngIf="isExpanded" class="cursor-pointer menu-text expand-menu">
+              {{ node.name }}</span
+            >
+          </div>
+          <button *ngIf="isExpanded" mat-icon-button [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+            </mat-icon>
+          </button>
+        </mat-tree-node>
+      </mat-tree>
+    </mat-sidenav>
+    <div class="sidenav-content"><router-outlet></router-outlet></div>
+  </mat-sidenav-container>
+</ng-container>
+<ng-template #elseBlock>
+  <div class="loader-container">
+    <mat-progress-spinner
+      class="loader"
+      [color]="loaderConfig.color"
+      [mode]="loaderConfig.mode"
+    ></mat-progress-spinner>
+  </div>
+</ng-template>

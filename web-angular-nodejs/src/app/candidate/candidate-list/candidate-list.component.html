@@ -1,0 +1,633 @@
+<ng-container>
+  <div class="main-container candidate-list-main" [ngClass]="{ 'pointer-events-none': showLoader }">
+    <div class="candidate-list-header search-field-border-color">
+      <form [formGroup]="requestFormGroup">
+        <div class="global-mat-class candidate-list-filter">
+          <div class="drive-aoi-filter">
+            <div class="first-row">
+              <mat-form-field appearance="outline" class="mat-search-for-candidate-grid">
+                <input
+                  matInput
+                  formControlName="keyword"
+                  data-id="candidate-search"
+                  placeholder="Search by Name/Email/Mobile"
+                  (keyup)="searchByText($event)"
+                  [readonly]="showLoader"
+                  [ngClass]="{ 'show-disabled': showLoader }"
+                />
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="mat-select-for-candidate-grid">
+                <mat-select
+                  formControlName="driveId"
+                  data-id="candidate-drive-filter"
+                  (selectionChange)="onChangeDrive($event)"
+                  placeholder="Search by Drive"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option [value]="0">All Drives</mat-option>
+                    <mat-option
+                      *ngFor="let drive of driveList"
+                      [value]="drive.id"
+                      attr.data-id="{{ drive.name }}"
+                      >{{ drive.name }}</mat-option
+                    >
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="mat-select-for-candidate-grid">
+                <mat-select
+                  formControlName="areaOfInterestId"
+                  data-id="candidate-interest-filter"
+                  (selectionChange)="filterResult()"
+                  placeholder="Search by Area Of Interest"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option [value]="0">All Area of Interest</mat-option>
+                    <mat-option
+                      *ngFor="let area of areaList"
+                      [value]="area.id"
+                      attr.data-id="{{ area.name }}"
+                      >{{ area.name }}</mat-option
+                    >
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="mat-select-for-candidate-grid">
+                <mat-select
+                  formControlName="examType"
+                  data-id="candidate-exam-filter"
+                  (selectionChange)="filterResult()"
+                  placeholder="All Exam Date"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option value="all">All Exams Date</mat-option>
+                    <mat-option value="upcoming">Upcoming Exam Date</mat-option>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="mat-select-for-candidate-grid">
+                <mat-select
+                  formControlName="registrationType"
+                  (selectionChange)="filterResult()"
+                  placeholder="Search by Registration Type"
+                  data-id="candidate-registration-type-filter"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option value="All">All Registration Type</mat-option>
+                    <mat-option
+                      *ngFor="let registrationType of registrationTypeOptions"
+                      [value]="registrationType"
+                      attr.data-id="{{ changeText(registrationType) }}"
+                      >{{ changeText(registrationType) }}</mat-option
+                    >
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="second-row">
+              <mat-form-field appearance="outline" class="mat-select-for-candidate-grid">
+                <mat-select
+                  [formControl]="columnsControl"
+                  data-id="column-options-dropdown"
+                  (selectionChange)="setFilter($event)"
+                  multiple
+                  placeholder="Column Options"
+                >
+                  <mat-select-trigger>
+                    <span
+                      *ngIf="columnsControl.value?.length > 1"
+                      class="example-additional-selection"
+                    >
+                      Column Options
+                    </span>
+                  </mat-select-trigger>
+                  <div *ngFor="let column of columnList">
+                    <div class="mat-option-checked" *ngIf="!defaultColumns.includes(column)">
+                      <mat-option [value]="column" attr.data-id="{{ column | titlecase }}">{{
+                        column | titlecase
+                      }}</mat-option>
+                    </div>
+                    <div class="mat-option-default-checked" *ngIf="defaultColumns.includes(column)">
+                      <mat-option
+                        [disabled]="defaultColumns.includes(column)"
+                        [value]="column"
+                        attr.data-id="{{ column | titlecase }}"
+                        >{{ column | titlecase }}</mat-option
+                      >
+                    </div>
+                  </div>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field
+                appearance="outline"
+                class="global-date-picker-class remove-datepicker-ripple"
+              >
+                <mat-date-range-input [rangePicker]="picker">
+                  <input
+                    matStartDate
+                    placeholder="Start Date"
+                    (dateInput)="onSelectFromDate($event)"
+                    [value]="requestFormGroup.controls['fromDate'].value"
+                    readonly
+                  />
+                  <input
+                    matEndDate
+                    placeholder="End Date"
+                    (dateInput)="onSelectToDate($event)"
+                    [value]="requestFormGroup.controls['toDate'].value"
+                    readonly
+                  />
+                </mat-date-range-input>
+                <mat-datepicker-toggle
+                  *ngIf="
+                    requestFormGroup.controls['fromDate'].value != '' ||
+                    requestFormGroup.controls['toDate'].value != ''
+                  "
+                  matSuffix
+                  (click)="clearDate($event)"
+                >
+                  <mat-icon matDatepickerToggleIcon data-id="clear-button">clear</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                  data-id="candidate-date-picker"
+                ></mat-datepicker-toggle>
+                <mat-date-range-picker #picker (closed)="onFocusOutDate()"></mat-date-range-picker>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="mat-select-for-candidate-grid">
+                <mat-select
+                  formControlName="userStatus"
+                  (selectionChange)="filterResult()"
+                  placeholder="Search by User Status"
+                  multiple
+                  [title]="requestFormGroup.controls['userStatus'].value"
+                  data-id="candidate-status-filter"
+                >
+                  <div class="mat-option-checked-tickmark">
+                    <mat-option
+                      [disabled]="showLoader"
+                      *ngFor="let status of userStatus"
+                      [value]="status"
+                      attr.data-id="{{ status }}"
+                      >{{ status }}</mat-option
+                    >
+                  </div>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="button-div">
+            <div class="add-user-section">
+              <i
+                class="fa fa-user-plus add-icon fa-2x green hand-cursor"
+                data-id="candidate-add"
+                title="Add New User"
+                data-toggle="tooltip"
+                *ngIf="utilsService.comparePermissions(access, PermissionLevel.ADD)"
+                (click)="addUser()"
+              ></i>
+              <i
+                class="fas fa-file-import import-icon fa-2x green hand-cursor"
+                data-id="candidate-import"
+                title="Import Users"
+                data-toggle="tooltip"
+                *ngIf="utilsService.comparePermissions(access, PermissionLevel.ADD)"
+                (click)="importUsers()"
+              ></i>
+              <i
+                class="fas fa-clone import-icon fa-2x green hand-cursor"
+                data-id="candidate-duplicate"
+                title="Duplicate Users"
+                data-toggle="tooltip"
+                (click)="loadDuplicateUsers()"
+              ></i>
+            </div>
+            <div class="action-buttons">
+              <button
+                mat-raised-button
+                type="button"
+                class="btn button-green white btn-lg inactivate-button"
+                (click)="downloadCSV()"
+                [disabled]="noRecordAvailable || disableButton"
+                data-id="candidate-download-csv"
+              >
+                Download CSV
+              </button>
+              <button
+                [disabled]="
+                  (selectAllCheckboxCheckedPreviously && !driveFilterSelected) ||
+                  disableButton ||
+                  (inactivationList.length === 0 && !selectAllCheckboxCheckedPreviously)
+                "
+                class="btn button-green white btn-lg inactivate-button"
+                type="button"
+                *ngIf="utilsService.comparePermissions(access, PermissionLevel.EDIT)"
+                (click)="resendMail()"
+                data-id="candidate-resend-mail"
+              >
+                Resend Login Details
+              </button>
+              <button
+                [disabled]="
+                  (selectAllCheckboxCheckedPreviously && !driveFilterSelected) ||
+                  disableButton ||
+                  (inactivationList.length === 0 && !selectAllCheckboxCheckedPreviously)
+                "
+                class="btn button-green white btn-lg inactivate-button"
+                type="button"
+                *ngIf="utilsService.comparePermissions(access, PermissionLevel.EDIT)"
+                (click)="inactivateUsers()"
+                data-id="candidate-inactivate-users"
+              >
+                Inactivate
+              </button>
+            </div>
+          </div>
+        </div>
+        -
+      </form>
+    </div>
+    <div
+      class="table-container"
+      infiniteScroll
+      [infiniteScrollDistance]="infiniteScrollDistance"
+      (scrolled)="onScrollDown()"
+      [scrollWindow]="false"
+      [alwaysCallback]="true"
+      [ngClass]="loader ? 'mat-loader-enabled' : ''"
+    >
+      <mat-progress-spinner
+        class="loader"
+        [color]="loaderConfig.color"
+        [mode]="loaderConfig.mode"
+        *ngIf="showLoader"
+      >
+      </mat-progress-spinner>
+      <table
+        mat-table
+        matSort
+        [dataSource]="dataSource"
+        class="mat-elevation-z8 table-container"
+        (matSortChange)="sortTableData($event)"
+      >
+        <ng-container matColumnDef="checkbox">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox
+              *ngIf="
+                utilsService.comparePermissions(access, PermissionLevel.EDIT) &&
+                !hideSelectAllCheckbox
+              "
+              (change)="selectAll($event)"
+              [checked]="selectAllCheckboxChecked"
+              class="gray-checkbox-border"
+              data-id="candidate-select-all-checkbox"
+            >
+            </mat-checkbox>
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="Inactivate User"
+            data-toggle="tooltip"
+            class="align-checkbox-center"
+          >
+            <mat-checkbox
+              *ngIf="utilsService.comparePermissions(access, PermissionLevel.EDIT)"
+              class="activation-checkbox"
+              (change)="addUserToInactivationList($event, element)"
+              [checked]="element.selected"
+              data-id="candidate-select-checkbox"
+            ></mat-checkbox>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="userName"
+            title="Name"
+            data-toggle="tooltip"
+          >
+            Name
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <div class="user-name">
+              <div
+                class="name text-wrap"
+                title="{{ element.firstName + ' ' + element.lastName }}"
+                data-toggle="tooltip"
+                attr.data-id="{{ element.firstName + ' ' + element.lastName }}"
+              >
+                {{ element.firstName + ' ' + element.lastName }}
+              </div>
+              <div
+                *ngIf="element.duplicateUser == 1"
+                (click)="showPossibleDuplicateUsers(element)"
+                class="suspect-duplicate"
+                title="Possible Duplicate User"
+                data-toggle="tooltip"
+              >
+                <img
+                  class="suspect-duplicate-flag"
+                  src="../../../../assets/images/suspect-duplicate.png"
+                  data-id="candidate-duplicate-icon"
+                />
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="area Of Interest">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="aoi.name"
+            title="Area Of Interest"
+            data-toggle="tooltip"
+          >
+            Area Of Interest
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="text-wrap area-of-interest"
+            title="{{ element.areaOfInterestName }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.areaOfInterestName }}"
+          >
+            {{ element.areaOfInterestName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="email"
+            title="Email"
+            data-toggle="tooltip"
+          >
+            Email
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.email }}"
+            class="text-wrap email"
+            style="max-width: 240px"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.email }}"
+          >
+            {{ element.email }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contact">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="mobile_number"
+            title="Contact"
+            data-toggle="tooltip"
+          >
+            Contact
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.mobileNumber }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.mobileNumber }}"
+          >
+            {{ element.mobileNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="exam Date">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="exam_start_time"
+            title="Exam Date"
+            data-toggle="tooltip"
+          >
+            Exam Date
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.examDate | uppercase }}"
+            data-toggle="tooltip"
+            class="exam-date"
+            attr.data-id="{{ element.examDate }}"
+          >
+            {{ element.examDate | uppercase }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="registration Type">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="registration_type"
+            title="Registration Type"
+            data-toggle="tooltip"
+          >
+            Registration Type
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ changeText(element.registrationType) }}"
+            data-toggle="tooltip"
+            data-id="{{ changeText(element.registrationType) }}"
+          >
+            {{ changeText(element.registrationType) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="drive Name">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="d.name"
+            title="Drive Name"
+            data-toggle="tooltip"
+          >
+            Drive Name
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            class="text-wrap drive-name"
+            title="{{ element.driveName }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.driveName }}"
+          >
+            {{ element.driveName }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="agora Status">
+          <th mat-header-cell *matHeaderCellDef title="Agora Status" data-toggle="tooltip">
+            Agora Status
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            matTooltip="{{ element.agoraStatus }}"
+            data-toggle="tooltip"
+            data-id="candidate-agora-status"
+            class="global-slider-toggle text-center"
+          >
+            <mat-slide-toggle
+              [color]="loaderConfig.color"
+              [disabled]="!utilsService.comparePermissions(access, PermissionLevel.EDIT)"
+              (change)="updateAgoraStatus($event, element)"
+              [checked]="element.agoraStatus == 'Restricted'"
+            ></mat-slide-toggle>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="qualification">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="qualification"
+            title="Qualification"
+            data-toggle="tooltip"
+          >
+            Qualification
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.qualification }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.qualification }}"
+          >
+            {{ element.qualification }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="location">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="location"
+            title="Location"
+            data-toggle="tooltip"
+          >
+            Location
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.location }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.location }}"
+          >
+            {{ element.location }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="source">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="source"
+            title="Location"
+            data-toggle="tooltip"
+          >
+            Source
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.source }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.source }}"
+          >
+            {{ element.source }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="whatsApp number">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="whatsAppNumber"
+            title="WhatsApp Number"
+            data-toggle="tooltip"
+          >
+            WhatsApp Number
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            title="{{ element.whatsappNumber }}"
+            data-toggle="tooltip"
+            attr.data-id="{{ element.whatsappNumber }}"
+          >
+            {{ element.whatsappNumber }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef title="Actions" data-toggle="tooltip">Actions</th>
+          <td mat-cell *matCellDef="let element">
+            <div class="actions">
+              <mat-icon
+                *ngIf="utilsService.comparePermissions(access, PermissionLevel.EDIT)"
+                class="edit-button"
+                (click)="editUser(element)"
+                title="Edit User"
+                data-toggle="tooltip"
+                data-id="candidate-edit-user"
+                >edit</mat-icon
+              >
+              <mat-icon
+                class="user-profile"
+                (click)="viewProfile(element, 'image')"
+                title="View Profile Image"
+                data-toggle="tooltip"
+                data-id="candidate-view-profile"
+                >co_present</mat-icon
+              >
+              <mat-icon
+                class="user-resume"
+                (click)="viewProfile(element, 'resume')"
+                title="View Resume"
+                data-toggle="tooltip"
+                data-id="candidate-view-resume"
+                >assignment</mat-icon
+              >
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <div *ngIf="!noRecordAvailable" class="grid-record-footer" attr.data-id="{{ totalCount }}">
+      <div>Total Records : {{ totalCount }}</div>
+    </div>
+    <div
+      *ngIf="noRecordAvailable"
+      class="no-record-found-text-for-grid"
+      data-id="no-record-found-text"
+    >
+      No records found
+    </div>
+  </div>
+</ng-container>

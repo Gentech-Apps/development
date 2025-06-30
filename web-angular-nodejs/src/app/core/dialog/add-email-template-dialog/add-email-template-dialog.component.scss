@@ -1,0 +1,22 @@
+.add-email-template-main-container {
+  height: fit-content;
+  max-height: 76vh;
+  overflow: hidden;
+
+  .add-email-template-header {
+    text-align: center;
+    height: 50px;
+    .email-template-title {
+      margin-bottom: 0px;
+      background: #93be3b;
+      color: white;
+      padding: 5px;
+    }
+  }
+
+  .add-email-template-content {
+    .error {
+      margin-left: 15px;
+    }
+  }
+}

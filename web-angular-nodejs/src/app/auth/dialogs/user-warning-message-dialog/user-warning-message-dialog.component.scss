@@ -1,0 +1,39 @@
+$base-green-color: #93be3b;
+
+ul {
+  padding-left: 20px;
+  list-style: circle;
+}
+
+.warning-btn-sec {
+  width: 100%;
+  text-align: right;
+}
+
+.mdc-dialog__title {
+  background-color: $base-green-color;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.mdc-dialog__content {
+  padding: 11px 9px 6px 9px;
+}
+
+.dialog-cancel-button {
+  background-color: #c9c9ca;
+  color: black;
+  width: 108px;
+  margin-right: 11px;
+}
+
+.dialog-reactivate-button {
+  background-color: $base-green-color;
+  color: white;
+  margin-right: 4px;
+}
+hr {
+  margin: 0;
+}

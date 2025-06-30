@@ -1,0 +1,37 @@
+<h5 class="dialog-header text-center white fullwidth mhl" mat-dialog-title>Login Warning!!!</h5>
+<mat-dialog-content>
+  <div>
+    <ul>
+      <li>
+        During the last test session you performed some action which was violative to the test
+        rules.
+      </li>
+      <li>
+        As a special consideration we can give you one more chance to re-appear and complete the
+        test.
+      </li>
+      <li>Please click the "Reactivate Me" Button to unlock your userID</li>
+    </ul>
+  </div>
+</mat-dialog-content>
+<hr />
+<mat-dialog-actions>
+  <div class="fullwidth center ml-40 warning-btn-sec">
+    <button
+      type="button"
+      (click)="isCancel()"
+      class="dialog-cancel-button btn"
+      data-id="cancel-button"
+    >
+      Cancel
+    </button>
+    <button
+      type="button"
+      (click)="isSubmited()"
+      class="dialog-reactivate-button btn"
+      data-id="reactivate-me-button"
+    >
+      Reactivate Me
+    </button>
+  </div>
+</mat-dialog-actions>

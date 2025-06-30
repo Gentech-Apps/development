@@ -1,0 +1,109 @@
+<h5 mat-dialog-title class="text-center">
+  Please indicate which of the following actions you performed which led to de-activating your ID -
+</h5>
+
+<mat-dialog-content>
+  <ul class="options ul pl-20">
+    <li>
+      <input
+        [ngModel]="userStatus"
+        [checked]="userStatus == 'Backward/Farward/Reload'"
+        (click)="changeStatus('Backward/Farward/Reload')"
+        type="radio"
+        name="userStatus"
+        value="Backward/Farward/Reload"
+        data-id="backward-forward-reload-radio"
+      /><span>&nbsp;Backward/Forward/Reload</span>
+    </li>
+    <li>
+      <input
+        [ngModel]="userStatus"
+        [checked]="userStatus == 'Admin Logout'"
+        (click)="changeStatus('Admin Logout')"
+        type="radio"
+        name="userStatus"
+        value="Admin Logout"
+        data-id="admin-logout-radio"
+      /><span>&nbsp;Admin Logout</span>
+    </li>
+    <li>
+      <input
+        [ngModel]="userStatus"
+        [checked]="userStatus == 'Copy Paste'"
+        (click)="changeStatus('Copy Paste')"
+        type="radio"
+        name="userStatus"
+        value="Copy Paste"
+        data-id="copy-paste-radio"
+      /><span>&nbsp;Copy Paste</span>
+    </li>
+    <li>
+      <input
+        [ngModel]="userStatus"
+        [checked]="userStatus == 'Meta(Windows) Key'"
+        (click)="changeStatus('MetaKeyUsed')"
+        type="radio"
+        name="userStatus"
+        value="MetaKeyUsed"
+        data-id="other-radio"
+      /><span>&nbsp;Meta(Windows) Key</span>
+    </li>
+    <li>
+      <input
+        [ngModel]="userStatus"
+        [checked]="userStatus == 'Other'"
+        (click)="changeStatus('Other')"
+        type="radio"
+        name="userStatus"
+        value="Other"
+        data-id="other-radio"
+      /><span>&nbsp;Other</span>
+    </li>
+  </ul>
+  <input
+    *ngIf="userStatus == 'Other'"
+    type="text"
+    name="otherMessage"
+    [ngModel]="otherMessage"
+    (ngModelChange)="changeComments($event)"
+    placeholder="Enter Comments"
+    class="textfield"
+    data-id="other-field"
+  />
+</mat-dialog-content>
+<hr />
+
+<mat-dialog-actions>
+  <input
+    [checked]="isTermsAccept"
+    (change)="isTermsAccept = !isTermsAccept"
+    class="termsCheckbox"
+    type="checkbox"
+    data-id="confirmation-checkbox"
+  />
+  <span class="ml-20 mt-1"
+    >I agree that now I will be more careful and will not perform any action which violates the test
+    rules</span
+  >
+  <br />
+  <div class="fullwidth center ml-40 mt-3 warning-btn-sec">
+    <button
+      [mat-dialog-close]="{ goBack: true }"
+      type="button"
+      (click)="isGoBack()"
+      class="dialog-back-button btn"
+      data-id="back-button"
+    >
+      Back
+    </button>
+    <button
+      type="button"
+      class="dialog-test-button btn"
+      (click)="submitWarningMessage()"
+      [disabled]="isDisableButton() || isSubmitted"
+      data-id="take-me-to-test-button"
+    >
+      Take me to the Test
+    </button>
+  </div>
+</mat-dialog-actions>

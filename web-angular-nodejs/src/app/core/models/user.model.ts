@@ -1,0 +1,49 @@
+export class UserModel {
+  id: number = 0;
+  firstName: string = '';
+  lastName: string = '';
+  fullName: string = '';
+  mobileNumber: string = '';
+  email: string = '';
+  password: string = '';
+  areaOfInterestId: number = 0;
+  userStatus: string = '';
+  userType: string = '';
+  loginStatus: string | null = '';
+  dateOfRegistration: String = '';
+  driveId: number = 0;
+  examDate: string = '';
+  examStartTime: string = '';
+  examEndTime: string = '';
+  agoraId: string = '';
+  agoraStatus: string = '';
+  updatedAreaOfInterestId: string = '';
+  finalResult: string = '';
+  finalMailStatus: string = '';
+  source: string = '';
+  whatsappNumber: string = '';
+  location: string = '';
+  qualificationId: number = 0;
+  language: string = '';
+  isDuplicate: string = '';
+  message: string = '';
+  publicIp: string = '';
+  bypass: boolean = false;
+  walkIn: boolean = false;
+  token: string = '';
+  currentDate: boolean = false;
+  editedbyAdmin: boolean = false;
+  loginUser: string = '';
+  referral: boolean = false;
+  selected: boolean = false;
+  otherQualification: string = '';
+  sortBy: string = '';
+  order: string = '';
+  page: number = 1;
+  size: number = 10;
+  registrationType: string = '';
+  roleId: number = 0;
+  feedbackCompleted: boolean = false;
+
+  constructor() {}
+}

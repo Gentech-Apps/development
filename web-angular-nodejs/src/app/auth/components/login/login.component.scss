@@ -1,0 +1,163 @@
+$base-green-color: #93be3b;
+
+.login-component {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+
+  .login-form {
+    width: 44%;
+
+    .upper-div {
+      padding: 5% 3% 3% 33%;
+
+      .login-text {
+        font-weight: 300;
+        color: #525252;
+      }
+
+      .register-btn {
+        background-color: $base-green-color;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        width: 120px;
+        height: 35px;
+        align-self: center;
+        margin-bottom: 9px;
+      }
+    }
+
+    .bottem-div {
+      margin-top: 8%;
+
+      .form {
+        margin: auto;
+        width: 75%;
+
+        .label {
+          margin-bottom: 2%;
+          color: #525252;
+        }
+
+        .icon-div {
+          position: absolute;
+          justify-content: end;
+          display: flex;
+          width: 10%;
+          margin-bottom: 6px;
+          bottom: 0;
+          right: 0;
+        }
+
+        .field-icon {
+          cursor: pointer;
+          color: #525252;
+        }
+
+        .invalidate {
+          font-size: 10px !important;
+          color: red;
+        }
+
+        .input-width {
+          margin-top: 4%;
+          position: relative;
+          width: 89%;
+        }
+
+        .textfield {
+          outline: none;
+          border-width: 0px 0px 2px 0px;
+          border-color: gray;
+          margin: 0;
+          margin-bottom: 1%;
+          box-shadow: none;
+          min-width: calc((100% - 30%) / 2);
+          color: #525252;
+        }
+      }
+
+      .login-btn {
+        background-color: $base-green-color;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        width: 120px;
+        height: 35px;
+      }
+    }
+
+    .action-buttons {
+      display: flex;
+      margin-top: 10%;
+      gap: 10%;
+      justify-content: space-between;
+      width: 89%;
+
+      p {
+        margin-top: -11%;
+        text-decoration: none;
+        height: 20px;
+        color: #0d6efd;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.instructions-div {
+  width: 59%;
+  background-color: $base-green-color;
+  background-image: linear-gradient(to bottom right, rgba(255, 255, 255, 0.4), $base-green-color);
+  color: white;
+
+  .login {
+    height: 100vh;
+    background-color: #93be3b;
+    background-image: linear-gradient(to bottom left, rgba(255, 255, 255, 0.4), #93be3b);
+
+    .center-image {
+      padding-top: 30px;
+      text-align: center;
+
+      .logo-image {
+        height: 60px;
+      }
+    }
+
+    .instruction-scroll {
+      margin-top: 10px;
+      overflow-y: auto;
+      color: white;
+      height: 82vh;
+    }
+
+    .register-wrapper {
+      vertical-align: middle;
+      height: calc(100vh - 33vh);
+      margin: 30px;
+
+      .more-button {
+        background-color: transparent;
+        color: white;
+        outline: none;
+        border: none;
+      }
+
+      .bottom-text {
+        margin-top: 20px;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.mat-mdc-progress-spinner {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  margin-top: 15%;
+  margin-left: 75%;
+  z-index: 9999 !important;
+}

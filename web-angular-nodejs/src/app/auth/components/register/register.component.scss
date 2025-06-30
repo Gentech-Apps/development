@@ -1,0 +1,93 @@
+.wrapper {
+  display: flex;
+  max-height: 100vh;
+  overflow: hidden;
+  width: 100%;
+  .registration-div {
+    width: 60%;
+    max-height: 100vh;
+    overflow-y: auto;
+    .title {
+      color: #525252;
+      font-weight: 400;
+      font-size: 32px !important;
+      margin-bottom: 15px;
+      margin-top: 15px;
+    }
+    .registration-form {
+      .generate_btn {
+        top: 9.5px;
+        right: -12px;
+        position: absolute;
+        border: none !important;
+        background: none;
+      }
+      .btn-link {
+        color: blue !important;
+      }
+    }
+    .finish-and-edit-div {
+      display: flex;
+      .finish-button {
+        line-height: 1.5;
+        border-radius: 3px;
+        padding: 0.25rem 0.5rem;
+      }
+      .edit-button {
+        margin-left: 3px;
+        line-height: 1.5;
+        border-radius: 3px;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+    .generate-button {
+      line-height: 1.5;
+      border-radius: 3px;
+      padding: 4px 6px;
+    }
+    .terms-and-condition {
+      margin-top: 15px;
+    }
+  }
+  .instructions-div {
+    width: 40%;
+    .login {
+      height: 100vh;
+      background-color: #93be3b;
+      background-image: linear-gradient(to bottom left, rgba(255, 255, 255, 0.4), #93be3b);
+      .center-image {
+        padding-top: 30px;
+        text-align: center;
+        .logo-image {
+          height: 60px;
+        }
+      }
+      .instruction-scroll {
+        margin-top: 10px;
+        overflow-y: auto;
+        color: white;
+        height: 72vh;
+      }
+      .register-wrapper {
+        vertical-align: middle;
+        height: calc(100vh - 33vh);
+        margin: 30px;
+        .more-button {
+          background-color: transparent;
+          color: white;
+          outline: none;
+          border: none;
+        }
+        .bottom-text {
+          margin-top: 20px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+.pointer-event-none {
+  pointer-events: none !important;
+  user-select: none;
+  cursor: default !important;
+}
