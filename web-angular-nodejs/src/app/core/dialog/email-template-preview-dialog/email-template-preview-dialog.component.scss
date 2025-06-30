@@ -1,0 +1,29 @@
+.email-template-preview {
+  padding: 0px;
+  .email-template-header {
+    height: 50px;
+    background-color: #93be3b;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .title {
+      margin: 0;
+    }
+  }
+
+  .email-template-body {
+    padding: 16px 16px 16px 16px;
+    overflow: auto;
+    max-height: calc(75vh - 85px);
+    .email-preview-subject {
+      font-size: 14px;
+      margin-bottom: 5px;
+      .email-preview-subject-heading {
+        font-weight: bold;
+        font-size: 14px;
+      }
+    }
+  }
+}

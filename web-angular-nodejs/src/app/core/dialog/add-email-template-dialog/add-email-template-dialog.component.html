@@ -1,0 +1,32 @@
+<ng-container>
+  <div class="add-email-template-main-container">
+    <div class="add-email-template-header">
+      <h2 class="email-template-title" attr.data-id="{{ templateType }}">{{ templateType }}</h2>
+    </div>
+    <div class="add-email-template-content d-flex px-4 mt-2 py-2">
+      <div class="w-100">
+        <quill-editor
+          [(ngModel)]="htmlContent"
+          class="content-editor d-flex flex-column w-100"
+          [placeholder]="''"
+          [modules]="toolbarConfig"
+          (onEditorChanged)="changedEditor($event)"
+        ></quill-editor>
+        <mat-error class="error" *ngIf="!isValid" data-id="email-template-editor-error"
+          >*This field is required.</mat-error
+        >
+      </div>
+    </div>
+    <div class="add-email-template-footer d-flex justify-content-center pt-1 mb-3">
+      <button
+        mat-raised-button
+        class="button-green submit-email-template-button p-2"
+        [disabled]="!isValid"
+        (click)="closeDialog()"
+        data-id="template-submit"
+      >
+        Submit
+      </button>
+    </div>
+  </div>
+</ng-container>

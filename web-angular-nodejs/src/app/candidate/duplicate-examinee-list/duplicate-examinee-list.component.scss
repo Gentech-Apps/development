@@ -1,0 +1,65 @@
+.duplicate-list-search-bar {
+  .search-field-container {
+    display: flex;
+    gap: 10px;
+    width: 75%;
+  }
+  .inactivate-button {
+    height: 35px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+  }
+}
+
+.duplicate-list-table {
+  height: fit-content;
+  max-height: calc(100vh - 172px);
+  overflow: auto;
+  margin-bottom: 5px;
+  .inactive-checkbox {
+    text-align: center !important;
+  }
+  .user-name {
+    max-width: 140px !important;
+    min-width: 140px !important;
+  }
+  .email {
+    max-width: 160px !important;
+    min-width: 160px !important;
+  }
+  .area-of-interest {
+    max-width: 60px !important;
+    min-width: 60px !important;
+  }
+  .drive-name {
+    max-width: 100px !important;
+    min-width: 100px !important;
+  }
+  .status {
+    max-width: 60px !important;
+    min-width: 60px !important;
+  }
+  .exam-date {
+    max-width: 140px !important;
+    min-width: 140px !important;
+  }
+  .actions {
+    display: flex;
+    gap: 5px;
+    .user-profile {
+      color: #93be3b;
+    }
+    .user-resume {
+      color: red;
+    }
+  }
+}
+
+@media only screen and (max-width: 1090px) {
+  .duplicate-list-search-bar {
+    .search-field-container {
+      width: 90%;
+    }
+  }
+}

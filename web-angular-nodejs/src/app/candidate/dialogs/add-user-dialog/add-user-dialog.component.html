@@ -1,0 +1,271 @@
+<ng-container>
+  <div class="add-user-main" [ngClass]="{ 'pointer-events-none': loader }">
+    <div class="add-user-header background-green">
+      <h5 class="add-user-heading">{{ headerName }}</h5>
+    </div>
+    <div class="add-user-form global-mat-class">
+      <form [formGroup]="addUserForm">
+        <div class="add-user-field" [hidden]="editModeEnabled">
+          <mat-form-field appearance="outline">
+            <mat-label>User Type</mat-label>
+            <input matInput data-id="candidate-usertype" formControlName="userType" readonly />
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>First Name</mat-label>
+            <input matInput data-id="candidate-firstname" formControlName="firstName" />
+            <mat-error data-id="candidate-firstname-error"
+              >*Please enter a valid first name</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Last Name</mat-label>
+            <input matInput data-id="candidate-lastname" formControlName="lastName" />
+            <mat-error data-id="candidate-lastname-error"
+              >*Please enter a valid last name</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Mobile No.</mat-label>
+            <input matInput data-id="candidate-mobile-number" formControlName="mobileNumber" />
+            <mat-error data-id="candidate-mobile-number-error"
+              >*Please enter a valid mobile number</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              data-id="candidate-email"
+              formControlName="email"
+              [readonly]="editModeEnabled"
+            />
+            <mat-error data-id="candidate-email-error">*Please enter a valid email</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1" *ngIf="generateButtonHidden && !editModeEnabled">
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input matInput data-id="candidate-password" formControlName="password" />
+            <button
+              class="btn-link regenerate-button"
+              *ngIf="!regenerateButtonHidden"
+              (click)="generatePassword()"
+              data-id="candidate-password-regenerate-button"
+            >
+              Regenerate
+            </button>
+            <mat-error data-id="candidate-password-error">*This field is required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Drive</mat-label>
+            <mat-select
+              placeholder="select drive"
+              formControlName="drive"
+              (selectionChange)="driveChanged($event)"
+              data-id="candidate-drive"
+            >
+              <div class="mat-option-checked-tickmark">
+                <mat-option
+                  *ngFor="let drive of driveList"
+                  [value]="drive.id"
+                  attr.data-id="{{ drive.name }}"
+                >
+                  {{ drive.name }}
+                </mat-option>
+              </div>
+            </mat-select>
+            <mat-error data-id="candidate-drive-error">*Please select a field</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Field Of Interest</mat-label>
+            <mat-select
+              placeholder="Select AreaOfInterest"
+              formControlName="areaOfInterest"
+              data-id="candidate-aoi"
+            >
+              <div class="mat-option-checked-tickmark">
+                <mat-option
+                  *ngFor="let area of areaList"
+                  [value]="area.id"
+                  attr.data-id="{{ area.name }}"
+                >
+                  {{ area.name }}
+                </mat-option>
+              </div>
+            </mat-select>
+            <mat-error data-id="candidate-aoi-error">*Please select a field</mat-error>
+          </mat-form-field>
+        </div>
+        <div *ngIf="!currentDateSelected" class="add-user-field pt-1">
+          <mat-form-field appearance="outline">
+            <mat-label>Date</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              [min]="minDate"
+              formControlName="date"
+              (dateInput)="addDate($event)"
+            />
+            <mat-datepicker-toggle
+              matIconSuffix
+              [for]="picker"
+              data-id="candidate-registration-date"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error data-id="candidate-registration-date-error"
+              >*Please enter a valid date</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div *ngIf="!currentDateSelected" class="add-user-field pt-1 time">
+          <div class="time-label">Time :</div>
+          <timepicker
+            data-id="candidate-registration-time"
+            formControlName="time"
+            [disabled]="disableTimePicker"
+          >
+          </timepicker>
+        </div>
+        <div>
+          <mat-error
+            class="time-mat-error"
+            *ngIf="addUserForm.get('time')?.invalid && addUserForm.get('time')?.touched"
+            >*Please enter a valid time</mat-error
+          >
+        </div>
+        <div>
+          <mat-checkbox
+            (change)="getCurrentDate($event)"
+            data-id="candidate-registration-current-date-time-checkbox"
+            formControlName="currentDate"
+            >Current Date & Time</mat-checkbox
+          >
+          <mat-checkbox
+            *ngIf="!editModeEnabled"
+            data-id="candidate-registration-skip-duplicate-checkbox"
+            formControlName="byPass"
+            >Skip Duplicate</mat-checkbox
+          >
+        </div>
+      </form>
+      <div *ngIf="editModeEnabled" class="requested-by">
+        <div>
+          <mat-radio-group (change)="onSelectReason($event)">
+            <mat-radio-button value="true" data-id="candidate-by-admin-radio"
+              >By Admin</mat-radio-button
+            >
+            <mat-radio-button value="false" data-id="candidate-on-user-request-radio"
+              >On User Request</mat-radio-button
+            >
+          </mat-radio-group>
+        </div>
+      </div>
+    </div>
+    <div
+      class="show-info-message px-4 py-2 text-center text-red"
+      *ngIf="
+        !(
+          showDuplicateErrorMessage ||
+          userAlreadyRegisterInAnotherDrive ||
+          addUserForm.controls['byPass'].value
+        )
+      "
+    >
+      {{ errorMessage }}
+    </div>
+    <div
+      class="text-center"
+      [ngClass]="{ show: showDuplicateErrorMessage, hide: !showDuplicateErrorMessage }"
+    >
+      <span>{{ errorMessage }}</span>
+    </div>
+    <div
+      class="text-center"
+      [ngClass]="{
+        show: userAlreadyRegisterInAnotherDrive,
+        hide: !userAlreadyRegisterInAnotherDrive,
+      }"
+    >
+      <span>{{ errorMessage }}</span>
+    </div>
+    <div class="add-user-buttons-div">
+      <button
+        *ngIf="
+          !generateButtonHidden && !showDuplicateErrorMessage && !userAlreadyRegisterInAnotherDrive
+        "
+        mat-button
+        class="btn2 btn-sm button-green white"
+        (click)="generatePassword()"
+        [disabled]="disableButton"
+        data-id="candidate-registration-generate-password-button"
+      >
+        Generate Password
+      </button>
+      <button
+        *ngIf="!generateButtonHidden && showDuplicateErrorMessage"
+        mat-button
+        class="btn2 btn-sm button-green white"
+        (click)="removeDuplicateErrorMessage()"
+        [disabled]="disableButton"
+      >
+        OK
+      </button>
+      <button
+        *ngIf="!generateButtonHidden && userAlreadyRegisterInAnotherDrive"
+        mat-button
+        class="btn2 btn-sm button-green white"
+        (click)="userAlreadyRegisteredGeneratePassword()"
+        [disabled]="disableButton"
+      >
+        Continue Registration
+      </button>
+      <button
+        *ngIf="!generateButtonHidden && userAlreadyRegisterInAnotherDrive"
+        mat-button
+        class="btn2 btn-sm button-red white"
+        (click)="removeDuplicateErrorMessage()"
+        [disabled]="disableButton"
+      >
+        Cancel Registration
+      </button>
+      <button
+        *ngIf="generateButtonHidden"
+        mat-button
+        class="btn2 btn-sm button-green white"
+        [disabled]="disableButton"
+        (click)="onSubmit()"
+        data-id="candidate-registration-submit-button"
+      >
+        Submit
+      </button>
+      <button
+        *ngIf="generateButtonHidden && !editModeEnabled"
+        mat-button
+        class="btn2 btn-sm button-green white"
+        (click)="editFormDetails()"
+        [disabled]="disableButton"
+        data-id="candidate-registration-edit-button"
+      >
+        Edit Details
+      </button>
+    </div>
+  </div>
+  <mat-progress-spinner
+    class="loader"
+    [color]="color"
+    [mode]="mode"
+    *ngIf="loader"
+  ></mat-progress-spinner>
+</ng-container>

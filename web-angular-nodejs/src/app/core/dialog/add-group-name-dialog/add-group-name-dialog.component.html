@@ -1,0 +1,36 @@
+<ng-container>
+  <div class="add-subject-main">
+    <div class="align-items-center d-flex fs-5 fw-light justify-content-center top-conatiner">
+      <span class="text-center text-white" attr.data-id="{{ headerMessage }}">{{
+        headerMessage
+      }}</span>
+    </div>
+    <div class="pb-2 pt-4 d-flex flex-column w-75 m-auto mid-container global-mat-class">
+      <mat-form-field appearance="outline">
+        <mat-label attr.data-id="{{ titleMessage }}">{{ titleMessage }}</mat-label>
+        <input
+          matInput
+          placeholder="{{ titleMessage }}"
+          type="text"
+          [(ngModel)]="groupName"
+          (keyup)="validateSubjectField()"
+          (blur)="validateSubjectField()"
+        />
+        <div class="field-error" *ngIf="groupNameRequired" data-id="subject-field-error">
+          *This field is required
+        </div>
+      </mat-form-field>
+    </div>
+    <div class="border-top d-flex justify-content-evenly p-3">
+      <button
+        mat-raised-button
+        class="button-green"
+        (click)="onAdd()"
+        [disabled]="groupName == ''"
+        data-id="email-subject-save"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</ng-container>

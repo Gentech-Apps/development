@@ -1,0 +1,89 @@
+.import-users-header {
+  .import-users-heading {
+    color: white;
+    text-align: center;
+    padding: 1rem 1rem;
+    margin-bottom: 0px !important;
+  }
+}
+
+.import-users-middle {
+  padding: 1rem;
+  padding-left: 60px;
+  padding-right: 60px;
+  .import-users-field {
+    display: flex;
+    .import-users-label {
+      min-width: 35%;
+    }
+  }
+  .import-users-field-checkbox {
+    display: flex;
+    justify-content: end;
+  }
+
+  .table-container {
+    max-height: 200px;
+    overflow: auto;
+
+    .duplicate-data {
+      color: red;
+    }
+  }
+}
+
+.import-users-footer {
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+  text-align: center;
+}
+
+.loading-image {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  left: 40%;
+  top: 38%;
+}
+
+.import-message {
+  font-family: sans-serif;
+  h4 {
+    text-align: center;
+    font-size: 18px;
+  }
+  h5 {
+    padding-bottom: 10px;
+    font-size: 16px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .show-duplicate-table {
+    display: flex;
+    justify-content: center;
+
+    .divider {
+      margin: -5px auto 5px !important;
+    }
+  }
+}
+.loader {
+  pointer-events: none !important;
+  cursor: default !important;
+  user-select: none !important;
+}
+.table-container.preview-table-data {
+  max-height: 300px !important;
+}
+.preview-footer {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15px;
+  .cacle-btn {
+    background-color: #f2f2f7;
+  }
+}

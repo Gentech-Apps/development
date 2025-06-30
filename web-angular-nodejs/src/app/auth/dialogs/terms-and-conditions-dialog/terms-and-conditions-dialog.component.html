@@ -1,0 +1,12 @@
+<ng-container>
+  <div class="background-green">
+    <h5 class="tnc-title">Terms and Conditions</h5>
+  </div>
+
+  <div class="tnc-body">
+    <UL>
+      <li *ngFor="let terms of conditionsList" attr.data-id="{{ terms }}">{{ terms }}</li>
+    </UL>
+    <div class="text-center" data-id="goodluck-text">Goodluck!</div>
+  </div>
+</ng-container>

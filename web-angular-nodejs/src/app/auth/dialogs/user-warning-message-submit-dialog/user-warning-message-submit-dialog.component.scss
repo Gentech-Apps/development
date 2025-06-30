@@ -1,0 +1,57 @@
+$base-green-color: #93be3b;
+
+ul {
+  padding-left: 4px;
+  list-style: none;
+}
+
+.warning-btn-sec {
+  width: 100%;
+  text-align: right;
+}
+
+.mdc-dialog__title {
+  background-color: $base-green-color;
+  padding: 3px 11px 3px 11px;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-weight: 300;
+}
+.mdc-dialog__content {
+  padding: 11px 9px 30px 9px;
+}
+.mdc-dialog__actions {
+  padding-left: 14px;
+}
+.dialog-back-button {
+  background-color: #c9c9ca;
+  color: black;
+  width: 110px;
+  margin-right: 14px;
+}
+
+.dialog-test-button {
+  background-color: $base-green-color;
+  color: white;
+  margin-right: 4px;
+}
+hr {
+  margin: 0;
+}
+.invalidate {
+  font-size: 10px !important;
+  color: red;
+  padding-left: 4px;
+}
+.textfield {
+  border-width: 0px 0px 2px 0px;
+  border-color: gray;
+  width: 79%;
+  color: #525252;
+  margin-left: 3px;
+}
+.termsCheckbox {
+  position: absolute;
+  top: 15px;
+}

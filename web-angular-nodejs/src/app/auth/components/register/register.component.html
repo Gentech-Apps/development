@@ -1,0 +1,568 @@
+<div *ngIf="isRender" [ngClass]="isSubmitted ? 'pointer-event-none' : ''">
+  <div class="wrapper ml-10">
+    <div class="registration-div">
+      <H1
+        class="title text-center"
+        title="REGISTRATION"
+        attr.data-id="Registration {{ driveData.name ? 'for ' + driveData.name : '' }}"
+        >Registration {{ driveData.name ? 'for ' + driveData.name : '' }}</H1
+      >
+      <mat-progress-spinner
+        *ngIf="showLoader"
+        class="loader"
+        [color]="color"
+        [mode]="mode"
+      ></mat-progress-spinner>
+      <div>
+        <form
+          [formGroup]="registerUserForm"
+          (keydown.enter)="$event.preventDefault()"
+          class="form"
+          autocomplete="off"
+        >
+          <div class="registration-form">
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstName" data-id="registration-firstname" />
+                    <mat-error
+                      *ngIf="hasError('firstName', 'required')"
+                      data-id="registration-firstname-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('firstName', 'pattern')"
+                      data-id="registration-firstname-pattern-error"
+                      >*Please enter a valid first name</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName" data-id="registration-lastname" />
+                    <mat-error
+                      *ngIf="hasError('lastName', 'required')"
+                      data-id="registration-lastname-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('lastName', 'pattern')"
+                      data-id="registration-lastname-pattern-error"
+                      >*Please enter a valid last name</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Email Address</mat-label>
+                    <input matInput formControlName="email" data-id="registration-email" />
+                    <mat-error
+                      *ngIf="hasError('email', 'required')"
+                      data-id="registration-email-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('email', 'pattern')"
+                      data-id="registration-email-pattern-error"
+                      >*Please enter a valid email</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Phone Number</mat-label>
+                    <input matInput formControlName="contactNumber" data-id="registration-phone" />
+                    <mat-error
+                      *ngIf="hasError('contactNumber', 'pattern')"
+                      data-id="registration-contact-number-pattern-error"
+                      >*Please enter valid phone number</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('contactNumber', 'required')"
+                      data-id="registration-contact-number-error"
+                      >*This field is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Field of Interest</mat-label>
+                    <mat-select
+                      placeholder="Select AreaOfInterest"
+                      formControlName="fieldOfInterest"
+                      data-id="registration-interest"
+                    >
+                      <mat-option
+                        *ngFor="let area of areaList"
+                        [value]="area.id"
+                        [disabled]="area.id == 0"
+                        attr.data-id="{{ area.name }}"
+                      >
+                        {{ area.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="!this.registerUserForm.controls['fieldOfInterest'].valid"
+                      data-id="registration-aoi-error"
+                      >*Please select a field</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div *ngIf="!disableDateTimeField">
+                  <mat-form-field appearance="outline" class="remove-datepicker-ripple">
+                    <mat-label>Date</mat-label>
+                    <input
+                      matInput
+                      formControlName="date"
+                      [min]="minDate"
+                      [max]="maxDate"
+                      [matDatepicker]="picker"
+                      [matDatepickerFilter]="myFilter"
+                      (dateInput)="onSelectExamDate($event)"
+                      readonly
+                    />
+                    <mat-datepicker-toggle
+                      class="date-picker-button"
+                      matSuffix
+                      [for]="picker"
+                      data-id="registration-date-picker"
+                    ></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                    <mat-error
+                      *ngIf="hasError('date', 'required')"
+                      data-id="registration-date-error"
+                      >*This field is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+                <div *ngIf="disableDateTimeField">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input matInput formControlName="date" readonly data-id="registration-date" />
+                    <mat-error
+                      *ngIf="hasError('date', 'required')"
+                      data-id="registration-date-error"
+                      >*This field is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block">
+              <div class="input-group-registration">
+                <div *ngIf="!disableDateTimeField">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Time</mat-label>
+                    <mat-select
+                      formControlName="time"
+                      [disabled]="disableDateTimeField"
+                      data-id="registration-time"
+                    >
+                      <ng-container *ngFor="let t of timeSlots">
+                        <mat-option
+                          [value]="t.timeSlot"
+                          attr.data-id="{{ t.timeSlot | ToTwelveHoursBase }}"
+                          >{{ t.timeSlot | ToTwelveHoursBase }}</mat-option
+                        >
+                      </ng-container>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="hasError('time', 'required')"
+                      data-id="registration-time-error"
+                      >*This field is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+                <div *ngIf="disableDateTimeField">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Time</mat-label>
+                    <input matInput formControlName="time" readonly data-id="registration-time" />
+                    <mat-error
+                      *ngIf="hasError('time', 'required')"
+                      data-id="registration-time-error"
+                      >*This field is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="registrationFields.whatsappNumber">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>WhatsApp Number</mat-label>
+                    <input
+                      matInput
+                      formControlName="whatsappNumber"
+                      data-id="registration-whatsapp-number"
+                    />
+                    <mat-error
+                      *ngIf="hasError('whatsappNumber', 'pattern')"
+                      data-id="registration-whatsapp-number-pattern-error"
+                      >*Please enter valid whatsApp number</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('whatsappNumber', 'required')"
+                      data-id="registration-whatsapp-number-error"
+                      >*This field is required</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="registrationFields.qualification">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Qualification</mat-label>
+                    <mat-select
+                      placeholder="select qualification"
+                      formControlName="qualification"
+                      data-id="registration-qualification"
+                      (selectionChange)="onSelectQualification($event)"
+                    >
+                      <mat-option
+                        *ngFor="let qualification of qualificationList"
+                        [value]="qualification"
+                        attr.data-id="{{ qualification.name }}"
+                      >
+                        {{ qualification.name }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-error
+                      *ngIf="hasError('qualification', 'required')"
+                      data-id="registration-qualification-error"
+                      >*Please select a field</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="showOtherQualificationField">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Other Degree</mat-label>
+                    <input
+                      matInput
+                      formControlName="otherQualification"
+                      placeholder="Enter qualification here"
+                      data-id="other-qualification-field"
+                    />
+                    <mat-error
+                      *ngIf="hasError('otherQualification', 'required')"
+                      data-id="other-qualification-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('otherQualification', 'pattern')"
+                      data-id="other-qualification-pattern-error"
+                      >*Please enter a valid qualification</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="registrationFields.location">
+              <div class="input-group-registration">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Location</mat-label>
+                    <input matInput formControlName="location" data-id="registration-location" />
+                    <mat-error
+                      *ngIf="hasError('location', 'required')"
+                      data-id="registration-location-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('location', 'pattern')"
+                      data-id="registration-location-pattern-error"
+                      >*Please enter a valid location</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="registrationFields.profile">
+              <div class="input-group-registration file-input-field">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Profile Photo</mat-label>
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="profile_input.click(); showValidation = false"
+                      data-id="registration-profile"
+                      [disabled]="isEditingDisabled"
+                    >
+                      <mat-icon matSuffix>attach_file</mat-icon>
+                    </button>
+                    <input type="text" readonly matInput formControlName="profile" />
+                    <input
+                      type="file"
+                      multiple
+                      hidden
+                      #profile_input
+                      accept=".png"
+                      (change)="handleProfileChange(profile_input.files)"
+                    />
+                    <mat-error
+                      *ngIf="hasError('profile', 'required')"
+                      data-id="registration-profile-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('profile', 'invalidType')"
+                      data-id="registration-profile-invalid-type-error"
+                      >*Please select valid profile photo in png format</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('profile', 'invalidSize')"
+                      data-id="registration-profile-invalid-size-error"
+                      >*Profile photo size should be less then 2 MB</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="registrationFields.resume">
+              <div class="input-group-registration file-input-field">
+                <div>
+                  <mat-form-field appearance="outline">
+                    <mat-label>Resume</mat-label>
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="resume_input.click(); showValidation = false"
+                      data-id="registration-resume"
+                      [disabled]="isEditingDisabled"
+                    >
+                      <mat-icon matSuffix>attach_file</mat-icon>
+                    </button>
+                    <input type="text" readonly matInput formControlName="resume" />
+                    <input
+                      type="file"
+                      multiple
+                      hidden
+                      #resume_input
+                      accept="application/pdf"
+                      (change)="handleResumeChange(resume_input.files)"
+                    />
+                    <mat-error
+                      *ngIf="hasError('resume', 'required')"
+                      data-id="registration-resume-error"
+                      >*This field is required</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('resume', 'invalidType')"
+                      data-id="registration-resume-invalid-type-error"
+                      >*Please upload a pdf file</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('resume', 'invalidMinSize')"
+                      data-id="registration-resume-invalid-minimum-size-error"
+                      >*Size should be greater than 20 kb</mat-error
+                    >
+                    <mat-error
+                      *ngIf="hasError('resume', 'invalidMaxSize')"
+                      data-id="registration-resume-invalid-maximum-size-error"
+                      >*Size should be less then 2 MB</mat-error
+                    >
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-space d-inline-block" *ngIf="showPasswordButton">
+              <div class="input-group-registration d-inline-block">
+                <div class="display-flex">
+                  <div>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Password</mat-label>
+                      <input
+                        matInput
+                        type="password"
+                        formControlName="password"
+                        (keydown.enter)="$event.preventDefault()"
+                        data-id="registration-password"
+                      />
+                      <button
+                        class="btn-link generate_btn"
+                        *ngIf="isRegenerateButtonHidden"
+                        id="regeneratePasswordButton"
+                        (click)="generatePassword('regeneratePasswordButton')"
+                        data-id="registration-password-regenerate-link"
+                      >
+                        Regenerate
+                      </button>
+                      <mat-error data-id="invalid-password-error"
+                        >*Please enter a valid password</mat-error
+                      >
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ml-40">
+            <input
+              type="checkbox"
+              formControlName="tnc"
+              class="mt-5px"
+              data-id="registration-tnc-checkbox"
+            />
+            <span class="cursor-pointer span">
+              I agree to the
+              <a
+                class="btn-link"
+                (click)="showTermsAndConditions()"
+                data-id="terms-and-conditions-link"
+                >Terms & Conditions</a
+              ></span
+            >
+            <div
+              class="text-danger"
+              *ngIf="this.registerUserForm.controls['tnc'].invalid && requiredTNC"
+            >
+              *Please agree to Terms and Conditions before proceeding
+            </div>
+
+            <div class="mt-10 mb-10" *ngIf="!showPasswordButton">
+              <button
+                id="generatePasswordButton"
+                class="generate-button button-green white"
+                data-id="registration-generate-password-button"
+                [disabled]="disablePasswordButton || isSubmitted"
+                (click)="generatePassword('generatePasswordButton')"
+                type="button"
+              >
+                Generate Password
+              </button>
+            </div>
+
+            <div class="mt-15 finish-and-edit-div" *ngIf="showPasswordButton">
+              <div>
+                <button
+                  class="finish-button button-green white"
+                  type="button"
+                  [disabled]="finishRegistration"
+                  (click)="register()"
+                  data-id="registration-finish-registration-button"
+                >
+                  Finish Registration
+                </button>
+              </div>
+              <div>
+                <button
+                  class="edit-button button-green white"
+                  type="button"
+                  (click)="onEditForm()"
+                  data-id="registration-edit-details"
+                >
+                  Edit Details
+                </button>
+              </div>
+            </div>
+            <div *ngIf="showPasswordButton" class="mt-5px">
+              <span class="text-danger" data-id="password-sent-message-text"
+                >* Password has been sent to your Email.</span
+              >
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="instructions-div">
+      <div class="login">
+        <div class="center-image">
+          <img
+            class="logo-image"
+            src="../../../../assets/images/Logo.png"
+            alt="Genesis Technologies"
+          />
+        </div>
+        <div class="instruction-scroll">
+          <H4 class="text-center">Instructions for exam</H4>
+          <div class="register-wrapper">
+            <H5 class="havent">● Objective</H5>
+            <UL>
+              <li
+                *ngFor="let inst of objectiveList; index as i"
+                [innerHtml]="inst.instruction"
+                [hidden]="i > 2"
+              ></li>
+            </UL>
+            <button
+              class="more-button"
+              [hidden]="showObjectiveInstructions"
+              (click)="showMoreInstructions('objective')"
+              data-id="objective-more-button"
+            >
+              <u><b>More...</b></u>
+            </button>
+            <div *ngIf="showObjectiveInstructions">
+              <UL>
+                <li
+                  *ngFor="let inst of objectiveList; index as i"
+                  [innerHtml]="inst.instruction"
+                  [hidden]="i < 3"
+                ></li>
+              </UL>
+            </div>
+
+            <H5 class="havent mt-20">● Subjective</H5>
+            <UL>
+              <li
+                *ngFor="let inst of subjectiveList; index as i"
+                [innerHtml]="inst.instruction"
+                [hidden]="i > 2"
+              ></li>
+            </UL>
+            <div *ngIf="showSubjectiveInstructions">
+              <UL>
+                <li
+                  *ngFor="let inst of subjectiveList; index as i"
+                  [innerHtml]="inst.instruction"
+                  [hidden]="i < 3"
+                ></li>
+              </UL>
+            </div>
+            <button
+              class="more-button"
+              [hidden]="showSubjectiveInstructions"
+              (click)="showMoreInstructions('subjective')"
+              data-id="subjective-more-button"
+            >
+              <u><b>More...</b></u>
+            </button>
+
+            <div class="bottom-text">Goodluck!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,197 @@
+<div class="p-3">
+  <div class="preview-stepper">
+    <div class="main-heading" data-id="drive-preview-title">Drive Preview</div>
+
+    <div class="preview-body">
+      <div>
+        <div class="sub-heading">Basic Info</div>
+        <div class="sub-body">
+          <ul class="e-list">
+            <li class="list-item" class="list-item">
+              <div class="field-name" data-id="drive-name-field">Drive Name</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{ addDriveFormGroup.driveName ? addDriveFormGroup.driveName : '-' }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="registration-type-field">Registration Type</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{ addDriveFormGroup.registrationIP ? 'IP' : 'Global' }}
+              </div>
+            </li>
+
+            <li class="list-item">
+              <div class="field-name" data-id="login-type-field">Login Type</div>
+              <div class="vl"></div>
+              <div class="field-value">{{ addDriveFormGroup.loginIP ? 'IP' : 'Global' }}</div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="criteria-field">Criteria</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{ addDriveFormGroup.criteria ? addDriveFormGroup.criteria : '-' }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="start-time-field">Start time</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{
+                  addDriveFormGroup.driveStartTime
+                    ? (addDriveFormGroup.driveStartTime | ToTwelveHoursBase)
+                    : '-'
+                }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="agora-status-field">Agora Status</div>
+              <div class="vl"></div>
+              <div class="field-value" data-id="{{ addDriveFormGroup.agoraStatus }}">
+                {{ addDriveFormGroup.agoraStatus }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="registration-ip-field">Registration IP</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{ addDriveFormGroup.registrationIP ? addDriveFormGroup.registrationIP : '-' }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="login-ip-field">Login IP</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{ addDriveFormGroup.loginIP ? addDriveFormGroup.loginIP : '-' }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="drive-date-field">Drive date</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{ addDriveFormGroup.driveDate ? addDriveFormGroup.driveDate : 'User Defined' }}
+              </div>
+            </li>
+            <li class="list-item">
+              <div class="field-name" data-id="end-time-field">End time</div>
+              <div class="vl"></div>
+              <div class="field-value">
+                {{
+                  addDriveFormGroup.driveEndTime
+                    ? (addDriveFormGroup.driveEndTime | ToTwelveHoursBase)
+                    : '-'
+                }}
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="sub-heading" data-id="form-fields-subtitle">Form Fields</div>
+        <div class="sub-body">
+          <div class="grid-container">
+            <div *ngFor="let field of formFields">
+              <div class="grid-item" attr.data-id="{{ field.fieldName }}">
+                {{ field.fieldName }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sub-heading" data-id="email-template-subtitle">Email Templates</div>
+        <div class="sub-body email-grid-container">
+          <div *ngFor="let emailTemplate of emailTemplateList" class="email-grid-item">
+            <div class="template-div">{{ emailTemplate.name }}</div>
+            <button
+              class="button button-green text-white"
+              (click)="previewEmailTemplate(emailTemplate.id)"
+              mat-button
+              data-id="email-template-preview"
+            >
+              Preview
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sub-heading" data-id="message-template-subtitle">Message Templates</div>
+        <div class="sub-body email-grid-container">
+          <div *ngFor="let messageTemplate of messageTemplateList" class="email-grid-item">
+            <div class="template-div">{{ messageTemplate.name }}</div>
+            <button
+              class="button button-green text-white"
+              (click)="previewMessageTemplate(messageTemplate)"
+              mat-button
+              data-id="message-template-preview"
+            >
+              Preview
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sub-heading" data-id="aoi-subtitle">Area Of Interest & Interview Stages</div>
+        <div class="sub-body">
+          <div class="grid-container-area">
+            <div
+              *ngFor="let area of areaList; let i = index"
+              class="area-stage-container"
+              [ngClass]="{ divider: i < areaList.length - 1 }"
+            >
+              <div class="grid-item-area" attr.data-id="{{ area.name }}">{{ area.name }}</div>
+              <div class="interview-stages">
+                <div class="stages" *ngFor="let stage of aoiInterviewStages[i]; let j = index">
+                  <div class="stage-name">{{ stage.name }}</div>
+                  <mat-icon class="arrow-icon" *ngIf="j != aoiInterviewStages[i].length - 1"
+                    >arrow_right_alt</mat-icon
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="sub-heading" data-id="paper-cutoff-subtitle">Paper CutOff</div>
+        <div class="sub-body">
+          <table class="paper-table">
+            <tr class="paper-table-row">
+              <th class="paper-table-th" data-id="column-aoi">Area Of Interest</th>
+              <th class="paper-table-th" data-id="column-paper">Paper</th>
+              <th class="paper-table-th" data-id="column-cutoff-marks">CutOff Marks</th>
+              <th class="paper-table-th" data-id="column-auto-cutoff-marks">Auto CutOff Marks</th>
+            </tr>
+            <ng-container *ngFor="let cutOff of cutOffList">
+              <tr *ngFor="let paper of cutOff.paperCutOff; index as i" class="paper-table-row">
+                <td
+                  *ngIf="i == 0"
+                  class="paper-table-td first-column"
+                  [attr.rowspan]="cutOff.paperCutOff.length"
+                  attr.data-id="{{ cutOff.areaOfInterestName }}"
+                >
+                  {{ cutOff.areaOfInterestName }}
+                </td>
+                <td class="paper-table-td" attr.data-id="{{ paper.paperName }}">
+                  {{ paper.paperName }}
+                </td>
+                <td class="paper-table-td" attr.data-id="{{ paper.cutoffMarks }}">
+                  {{ paper.cutoffMarks }}
+                </td>
+                <td class="paper-table-td" attr.data-id="{{ paper.autoCutOffMarks }}">
+                  {{ paper.autoCutOffMarks }}
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<ng-container>
+  <HEADER class="template-preview-header">
+    <img src="../../../../assets/images/Logo.png" alt="Genesis Technologies" />
+  </HEADER>
+
+  <div *ngIf="showLoader" class="content-loader content-loader-1"></div>
+  <div *ngIf="showLoader" class="content-loader content-loader-2"></div>
+  <div *ngIf="showLoader" class="content-loader content-loader-3"></div>
+
+  <div
+    *ngIf="!showLoader"
+    [innerHTML]="messageContent"
+    class="template-content"
+    data-id="thankyou-text"
+  ></div>
+</ng-container>

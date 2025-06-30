@@ -1,0 +1,152 @@
+<div class="login-component">
+  <mat-spinner *ngIf="showLoader" class="spinner"></mat-spinner>
+  <div class="instructions-div">
+    <div class="login">
+      <div class="center-image">
+        <img
+          class="logo-image"
+          src="../../../../assets/images/Logo.png"
+          alt="Genesis Technologies"
+        />
+      </div>
+      <div class="instruction-scroll">
+        <H4 class="text-center">Instructions for exam</H4>
+        <div class="register-wrapper">
+          <H5 class="havent">● Objective</H5>
+          <UL>
+            <li
+              *ngFor="let inst of objectiveList; index as i"
+              [innerHtml]="inst.instruction"
+              [hidden]="i > 2"
+            ></li>
+          </UL>
+          <button
+            class="more-button"
+            [hidden]="showObjectiveInstructions"
+            (click)="showMoreInstructions('objective')"
+          >
+            <u><b>More...</b></u>
+          </button>
+          <div *ngIf="showObjectiveInstructions">
+            <UL>
+              <li
+                *ngFor="let inst of objectiveList; index as i"
+                [innerHtml]="inst.instruction"
+                [hidden]="i < 3"
+              ></li>
+            </UL>
+          </div>
+
+          <H5 class="havent mt-20">● Subjective</H5>
+          <UL>
+            <li
+              *ngFor="let inst of subjectiveList; index as i"
+              [innerHtml]="inst.instruction"
+              [hidden]="i > 2"
+            ></li>
+          </UL>
+          <div *ngIf="showSubjectiveInstructions">
+            <UL>
+              <li
+                *ngFor="let inst of subjectiveList; index as i"
+                [innerHtml]="inst.instruction"
+                [hidden]="i < 3"
+              ></li>
+            </UL>
+          </div>
+          <button
+            class="more-button"
+            [hidden]="showSubjectiveInstructions"
+            (click)="showMoreInstructions('subjective')"
+          >
+            <u><b>More...</b></u>
+          </button>
+
+          <div class="bottom-text">Goodluck!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="login-form">
+    <div class="upper-div d-flex justify-content-between upper-div">
+      <h1 class="login-text" title="LOGIN">LOGIN</h1>
+      <button class="register-btn" type="button" (click)="navigate()" data-id="register-button">
+        <span>Register</span>
+      </button>
+    </div>
+    <div class="bottem-div">
+      <form [formGroup]="loginForm" (keyup.enter)="loginUser()" autocomplete="off">
+        <div class="form d-flex flex-column">
+          <div class="input-width d-flex flex-column mb-3">
+            <div class="label">Email Address:</div>
+            <input
+              [formControlName]="formControlVariables.email"
+              class="textfield"
+              matInput
+              data-id="login-email"
+            />
+            <span
+              *ngIf="hasError(formControlVariables.email, 'required')"
+              class="invalidate"
+              id="invalid-email-login"
+              data-id="login-email-error"
+              >*Email is required</span
+            >
+            <span
+              *ngIf="hasError(formControlVariables.email, 'pattern')"
+              class="invalidate"
+              id="invalid-email-login"
+              data-id="login-email-pattern-error"
+              >*Please Enter a Valid Email</span
+            >
+          </div>
+          <br />
+          <div class="input-width d-flex flex-column">
+            <div class="label">Password:</div>
+            <input
+              [formControlName]="formControlVariables.password"
+              [type]="passwordType"
+              class="textfield w-100"
+              matInput
+              data-id="login-password"
+            />
+            <div class="icon-div">
+              <mat-icon
+                matSuffix
+                (click)="showPassword()"
+                attr.data-id="{{ passwordType == 'password' ? 'visibility_off' : 'visibility' }}"
+                >{{ passwordType == 'password' ? 'visibility_off' : 'visibility' }}</mat-icon
+              >
+            </div>
+          </div>
+          <span
+            *ngIf="hasError('password', 'minlength')"
+            class="invalidate"
+            id="invalid-password-login"
+            data-id="login-password-length-error"
+            >*Password length should be greater than or equal to 8 character.</span
+          >
+          <span
+            *ngIf="hasError('password', 'required')"
+            class="invalidate"
+            id="invalid-password-login"
+            data-id="login-password-error"
+            >*Password is required</span
+          >
+          <div class="action-buttons">
+            <button
+              type="submit"
+              class="login-btn"
+              (click)="loginUser()"
+              [disabled]="isLogin"
+              data-id="login-submit-button"
+            >
+              Login
+            </button>
+            <p (click)="openForgotPasswordDialog()">Forgot password?</p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

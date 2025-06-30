@@ -1,0 +1,6 @@
+<main>
+  <app-layout *ngIf="showLayout; else elseBlock"></app-layout>
+  <ng-template #elseBlock>
+    <router-outlet></router-outlet>
+  </ng-template>
+</main>
