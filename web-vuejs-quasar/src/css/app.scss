@@ -1,0 +1,391 @@
+// app global css in SCSS form
+@import "./scroll.css";
+
+.fs--8 {
+  font-size: 6px !important;
+}
+
+.fs--10 {
+  font-size: 10px !important;
+}
+
+.fs--12 {
+  font-size: 12px !important;
+}
+
+.fs--14 {
+  font-size: 14px !important;
+}
+
+.fs--15 {
+  font-size: 15px !important;
+}
+
+.fs--16 {
+  font-size: 16px !important;
+}
+
+.fs--17 {
+  font-size: 17px !important;
+}
+
+.fs--18 {
+  font-size: 18px !important;
+}
+
+.fs--20 {
+  font-size: 20px !important;
+}
+
+.fs--24 {
+  font-size: 24px !important;
+}
+
+.fs--36 {
+  font-size: 36px !important;
+}
+
+::-moz-selection {
+  /* Code for Firefox */
+  background: #dae9bc;
+}
+
+::selection {
+  background: #dae9bc;
+}
+
+.q-drawer--left {
+  position: fixed !important;
+}
+
+.border-primary {
+  border: 2px solid $primary !important;
+  border-radius: 10px;
+}
+
+.border-secondary {
+  border: 2px solid $secondary !important;
+  border-radius: 10px;
+}
+
+.border-purple {
+  border: 2px solid purple !important;
+  border-radius: 10px;
+}
+
+.border-danger {
+  border: 2px solid $negative !important;
+  border-radius: 10px;
+}
+
+.border-purple {
+  border: 2px solid $accent !important;
+  border-radius: 10px;
+}
+
+.border-gray {
+  border: 2px solid #8f8d8d !important;
+  border-radius: 10px;
+}
+
+.border-black {
+  border: 2px solid #000000 !important;
+  border-radius: 10px;
+}
+
+.q-dialog__inner--minimized > div {
+  max-height: none;
+}
+
+.bg-rejected {
+  background-color: #000080;
+}
+
+.border-warning {
+  border: 2px solid $warning !important;
+  border-radius: 10px;
+}
+// ScrollBar CSS
+
+.timesheet-card ::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 1000px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: grey;
+  border-radius: 50px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: grey;
+}
+
+// ScrollBar CSS END
+
+.sticky-header-table {
+  height: 80vh;
+}
+.q-table__top {
+  padding-bottom: 0px;
+}
+
+.q-table__top,
+.q-table__bottom,
+thead tr:first-child th {
+  background-color: white;
+}
+
+thead tr th {
+  position: sticky;
+  z-index: 1;
+}
+thead tr:first-child th {
+  top: 0;
+}
+
+/* this is when the loading indicator appears */
+.q-table--loading thead tr:last-child th {
+  top: 48px;
+}
+/* height of all previous header rows */
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.q-tab-panels {
+  background: none !important;
+}
+
+.q-editor__content {
+  max-height: 160px;
+}
+
+.scroll_timesheet {
+  height: 65vh;
+  overflow-y: auto;
+}
+
+.scroll_birthday {
+  height: 65vh;
+  overflow-y: auto;
+  display: flex;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.denote_color ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  font-size: 12px;
+  display: flex;
+}
+
+.denote_color li {
+  position: relative;
+  padding-left: 15px;
+}
+
+.denote_color .color_dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.q-menu.q-position-engine.scroll {
+  max-width: 289.734px !important;
+}
+.client_details {
+  display: inline-block;
+  background: #6cc6c9;
+  padding: 2px 5px;
+  .clientName {
+    text-transform: uppercase;
+  }
+}
+.project_details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .bg-project {
+    background: #c9de9d;
+    padding: 2px 5px;
+    strong {
+      text-transform: capitalize;
+    }
+  }
+}
+.q-dialog__inner .appraisal-modal {
+  height: fit-content;
+  max-height: 85vh;
+  width: 100%;
+  max-width: 900px;
+}
+
+.q-tabs--vertical .q-tabs__arrow--right {
+  bottom: 9px;
+}
+
+.custom-padding {
+  padding-bottom: 58px;
+}
+
+//tooltip-css
+.bg-tip {
+  background-color: white;
+  font-weight: 400;
+  color: $dark;
+}
+
+.tooltip-item {
+  padding: 0px;
+  margin: 0px;
+}
+.tooltip-item-heading {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+.tooltip-item-sub-heading {
+  font-size: 0.7rem;
+}
+
+//text-css-for-site
+.headtext {
+  color: $dark;
+}
+.subtext {
+  color: $subtext;
+  word-break: break-all;
+}
+//icons-css
+.common-icons {
+  font-size: 2rem;
+}
+
+/*Applied css for (leaves/Timesheets/Appraisals) Menus Grouping */
+.appraisal_tab_width .q-splitter__panel.q-splitter__before {
+  width: 15% !important;
+}
+.leave_tab_width .full-width .q-splitter__panel.q-splitter__before {
+  width: 50% !important;
+}
+
+.ir_tab_width .full-width .q-splitter__panel.q-splitter__before {
+  width: 50% !important;
+}
+
+.appraisal_tab_width .q-tabs__arrow {
+  display: none;
+}
+
+.appraisal-stepper .q-stepper__tab {
+  padding: 12px 0px !important;
+  cursor: pointer;
+}
+
+.appraisal-stepper .q-stepper__step-inner {
+  padding: unset !important;
+}
+.appraisal-stepper .q-stepper__dot {
+  display: none;
+}
+
+.appraisal-stepper .q-stepper__title {
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.0125em;
+  cursor: pointer;
+  user-select: none;
+}
+
+div#lwpTable .q-table__bottom {
+  padding-left: 7px !important;
+}
+
+.q-tab__indicator.absolute-right {
+  width: 3px !important;
+  color: #97c042 !important;
+}
+.menu-grouping-list {
+  border: 0px !important;
+  .q-expansion-item__container .q-expansion-item__content {
+    color: #9e9e9e !important;
+  }
+  .q-separator--horizontal {
+    height: 0 !important;
+  }
+  .q-item__label {
+    font-weight: bolder;
+  }
+}
+
+.my-input .q-field__control {
+  min-height: 40px;
+}
+.my-input .q-field__control .q-field__control-container {
+  padding-top: 0px;
+}
+.my-input .q-field__messages.col {
+  color: #f00;
+  font-style: italic;
+  font-size: 10px;
+  font-weight: 400;
+}
+
+.my-input .q-field__label {
+  font-size: small;
+  color: #515151d1;
+  font-family: "Roboto";
+  padding: 0;
+  margin-top: 4px;
+  margin-bottom: 0px;
+  font-weight: 400;
+}
+
+.leaveEncashmentCheckbox .q-checkbox__inner {
+  font-size: 36px !important;
+  top: 2px !important;
+}
+
+.q-splitter--vertical.q-splitter--workable > .q-splitter__separator {
+  cursor: unset !important;
+}
+
+.q-splitter__separator-area.absolute-full {
+  top: unset !important;
+  right: unset !important;
+  left: unset !important;
+  bottom: unset !important;
+}
+.resize-textarea textarea {
+  resize: none !important;
+}
+
+#main-layout-logo {
+  pointer-events: none !important;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.denote_color li::before,
+.hide-bullets li::before {
+  display: none !important;
+}

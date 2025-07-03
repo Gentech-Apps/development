@@ -1,0 +1,61 @@
+{
+  "name": "pegasus",
+  "version": "1.0.0",
+  "description": "People Empowered at Genesis for Agility and Success through Unified System",
+  "productName": "PEGASUS",
+  "author": {
+    "name": "Genesis Technologies",
+    "email": "info@genesistechnologies.in"
+  },
+  "private": true,
+  "scripts": {
+    "start": "quasar dev",
+    "format": "prettier --write \"**/*.{js,vue,scss,html,md,json}\" --ignore-path .gitignore",
+    "build": "quasar build"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.6",
+    "@vueup/vue-quill": "^1.2.0",
+    "axios": "^1.4.0",
+    "cronstrue": "^2.29.0",
+    "cropperjs": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "highcharts": "^11.1.0",
+    "highcharts-vue": "^1.4.3",
+    "moment": "^2.29.4",
+    "pdfmake": "^0.2.18",
+    "quasar": "^2.12.6",
+    "querystring": "^0.2.1",
+    "vue": "^3.3.4",
+    "vue-advanced-cropper": "^2.8.8",
+    "vue-class-component": "^8.0.0-rc.1",
+    "vue-cryptojs": "^2.4.3",
+    "vue-property-decorator": "^9.1.2",
+    "vue-router": "^4.2.4",
+    "vue-star-rating": "^2.1.0",
+    "vuedraggable": "^4.1.0",
+    "vuex": "^4.1.0",
+    "vuex-persistedstate": "^4.1.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@quasar/app-webpack": "^3.10.0",
+    "prettier": "^3.0.1"
+  },
+  "browserslist": [
+    "last 10 Chrome versions",
+    "last 10 Firefox versions",
+    "last 4 Edge versions",
+    "last 7 Safari versions",
+    "last 8 Android versions",
+    "last 8 ChromeAndroid versions",
+    "last 8 FirefoxAndroid versions",
+    "last 10 iOS versions",
+    "last 5 Opera versions"
+  ],
+  "engines": {
+    "node": ">= 16.18.0",
+    "npm": ">= 8.19.2",
+    "yarn": ">= 1.21.1"
+  }
+}
